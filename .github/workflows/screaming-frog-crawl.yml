@@ -64,7 +64,7 @@ jobs:
             --autodetect \
             --source_format=CSV \
             --skip_leading_rows=1 \
-            githubactions-493011.screaming_frog_alma.alma \
+            "githubactions-493011:screaming_frog_alma.alma" \
             "results/${CRAWL_DATE}/crawl_overview.dated.csv"
 
       - name: Commit results to repo
