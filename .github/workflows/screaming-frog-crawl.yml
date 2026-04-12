@@ -61,7 +61,6 @@ jobs:
         run: |
           CRAWL_DATE=$(date +%Y-%m-%d)
           bq load \
-            --append_table \
             --autodetect \
             --source_format=CSV \
             --skip_leading_rows=1 \
