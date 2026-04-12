@@ -24,11 +24,12 @@ jobs:
           wget -q "$DEB_URL" -O "$DEB_FILE"
           sudo apt-get install -y "./$DEB_FILE"
 
-      - name: Activate Screaming Frog licence
+      - name: Activate Screaming Frog licence and accept EULA
         run: |
-          mkdir -p ~/ScreamingFrogSEOSpider
+          mkdir -p ~/.ScreamingFrogSEOSpider
           printf '%s\n%s\n' "${{ secrets.SF_LICENSE_USERNAME }}" "${{ secrets.SF_LICENSE_KEY }}" \
-            > ~/ScreamingFrogSEOSpider/licence.txt
+            > ~/.ScreamingFrogSEOSpider/licence.txt
+          echo "eula.accepted=15" > ~/.ScreamingFrogSEOSpider/spider.config
 
       - name: Run crawl
         run: |
