@@ -44,16 +44,26 @@ jobs:
       - name: Add crawl_date column and clean headers for BigQuery
         run: |
           CRAWL_DATE=$(date +%Y-%m-%d)
-          CSV_FILE="results/${CRAWL_DATE}/crawl_overview.csv"
-          awk -v date="$CRAWL_DATE" '
-            NR==1 {
-              header = "crawl_date," $0
-              gsub(/"/, "", header)
-              gsub(/ /, "_", header)
-              print header
-            }
-            NR>1 { print date "," $0 }
-          ' "$CSV_FILE" > "results/${CRAWL_DATE}/crawl_overview.dated.csv"
+          cat > /tmp/process_csv.py << 'PYEOF'
+          import csv, re, sys
+          crawl_date, csv_file, out_file = sys.argv[1], sys.argv[2], sys.argv[3]
+          with open(csv_file, newline='', encoding='utf-8-sig') as fin, \
+               open(out_file, 'w', newline='', encoding='utf-8') as fout:
+              reader = csv.reader(fin)
+              writer = csv.writer(fout)
+              headers = next(reader)
+              clean = ['crawl_date'] + [
+                  re.sub(r'_+', '_', re.sub(r'[^a-zA-Z0-9]', '_', h)).strip('_')
+                  for h in headers
+              ]
+              writer.writerow(clean)
+              for row in reader:
+                  writer.writerow([crawl_date] + row)
+          PYEOF
+          python3 /tmp/process_csv.py \
+            "$CRAWL_DATE" \
+            "results/${CRAWL_DATE}/crawl_overview.csv" \
+            "results/${CRAWL_DATE}/crawl_overview.dated.csv"
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
