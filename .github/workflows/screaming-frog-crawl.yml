@@ -8,6 +8,8 @@ on:
 jobs:
   crawl:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repo
@@ -27,7 +29,6 @@ jobs:
           mkdir -p results
           screamingfrogseospider \
             --headless \
-            --accept-cookie-prompt \
             --license-key ${{ secrets.SF_LICENSE_KEY }} \
             --crawl http://spilou.com/ \
             --save-report "Crawl Overview" \
