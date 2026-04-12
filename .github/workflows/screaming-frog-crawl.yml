@@ -41,7 +41,7 @@ jobs:
           screamingfrogseospider \
             --headless \
             --crawl http://spilou.com/ \
-            --save-report "Crawl Overview" \
+            --export-tabs "Internal:All" \
             --output-folder results/${CRAWL_DATE}
 
       - name: Add crawl_date column and clean headers for BigQuery
@@ -65,8 +65,8 @@ jobs:
           PYEOF
           python3 /tmp/process_csv.py \
             "$CRAWL_DATE" \
-            "results/${CRAWL_DATE}/crawl_overview.csv" \
-            "results/${CRAWL_DATE}/crawl_overview.dated.csv"
+            "results/${CRAWL_DATE}/internal_all.csv" \
+            "results/${CRAWL_DATE}/internal_all.dated.csv"
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -84,7 +84,7 @@ jobs:
             --source_format=CSV \
             --skip_leading_rows=1 \
             "githubactions-493011:screaming_frog_alma.alma" \
-            "results/${CRAWL_DATE}/crawl_overview.dated.csv"
+            "results/${CRAWL_DATE}/internal_all.dated.csv"
 
       - name: Commit results to repo
         run: |
