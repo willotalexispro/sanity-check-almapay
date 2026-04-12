@@ -1,555 +1,484 @@
-crawl_date,Site_Crawled,http_spilou_com
-2026-04-12,Start Date,2026-04-12
-2026-04-12,Start Time,21:44:37
-2026-04-12,Last Modified Date,2026-04-12
-2026-04-12,Last Modified Time,21:44:52
-2026-04-12,Elapsed,00:00:15
-2026-04-12,Report Date,2026-04-12
-2026-04-12,Report Time,21:44:52
-2026-04-12,
-2026-04-12,Summary,URLs,% of Total,Total URLs,Total URLs Description
-2026-04-12,Total URLs Encountered,266,100.00%,266,URLs Encountered
-2026-04-12,Total URLs Crawled,228,85.71%,266,URLs Encountered
-2026-04-12,Total Internal blocked by robots.txt,0,0.00%,266,URLs Encountered
-2026-04-12,Total External blocked by robots.txt,38,14.29%,266,URLs Encountered
-2026-04-12,
-2026-04-12,URLs Displayed,266,100.00%,266,URLs Displayed
-2026-04-12,Total Internal URLs,130,48.87%,266,URLs Displayed
-2026-04-12,Total External URLs,136,51.13%,266,URLs Displayed
-2026-04-12,Total Internal Indexable URLs,86,32.33%,266,URLs Displayed
-2026-04-12,Total Internal Non-Indexable URLs,44,16.54%,266,URLs Displayed
-2026-04-12,
-2026-04-12,Internal
-2026-04-12,All,130,100.00%,130,Internal URLs
-2026-04-12,HTML,87,66.92%,130,Internal URLs
-2026-04-12,JavaScript,1,0.77%,130,Internal URLs
-2026-04-12,CSS,3,2.31%,130,Internal URLs
-2026-04-12,Images,38,29.23%,130,Internal URLs
-2026-04-12,Media,0,0.00%,130,Internal URLs
-2026-04-12,Fonts,0,0.00%,130,Internal URLs
-2026-04-12,XML,0,0.00%,130,Internal URLs
-2026-04-12,PDF,0,0.00%,130,Internal URLs
-2026-04-12,Plugins,0,0.00%,130,Internal URLs
-2026-04-12,Other,1,0.77%,130,Internal URLs
-2026-04-12,Unknown,0,0.00%,130,Internal URLs
-2026-04-12,
-2026-04-12,External
-2026-04-12,All,136,100.00%,136,External URLs
-2026-04-12,HTML,55,40.44%,136,External URLs
-2026-04-12,JavaScript,0,0.00%,136,External URLs
-2026-04-12,CSS,0,0.00%,136,External URLs
-2026-04-12,Images,0,0.00%,136,External URLs
-2026-04-12,Media,0,0.00%,136,External URLs
-2026-04-12,Fonts,0,0.00%,136,External URLs
-2026-04-12,XML,0,0.00%,136,External URLs
-2026-04-12,PDF,0,0.00%,136,External URLs
-2026-04-12,Plugins,0,0.00%,136,External URLs
-2026-04-12,Other,43,31.62%,136,External URLs
-2026-04-12,Unknown,38,27.94%,136,External URLs
-2026-04-12,
-2026-04-12,Security
-2026-04-12,All,130,100.00%,130,All internal and non-HTML external URLs
-2026-04-12,HTTP URLs,1,0.77%,130,All internal and non-HTML external URLs
-2026-04-12,HTTPS URLs,129,99.23%,130,All internal and non-HTML external URLs
-2026-04-12,Mixed Content,0,0.00%,130,All internal and non-HTML external URLs
-2026-04-12,Form URL Insecure,0,0.00%,130,All internal and non-HTML external URLs
-2026-04-12,Form on HTTP URL,0,0.00%,130,All internal and non-HTML external URLs
-2026-04-12,Unsafe Cross-Origin Links,0,0.00%,130,All internal and non-HTML external URLs
-2026-04-12,Protocol-Relative Resource Links,0,0.00%,130,All internal and non-HTML external URLs
-2026-04-12,Missing HSTS Header,0,0.00%,130,All internal and non-HTML external URLs
-2026-04-12,Missing Content-Security-Policy Header,86,66.15%,130,All internal and non-HTML external URLs
-2026-04-12,Missing X-Content-Type-Options Header,86,66.15%,130,All internal and non-HTML external URLs
-2026-04-12,Missing X-Frame-Options Header,86,66.15%,130,All internal and non-HTML external URLs
-2026-04-12,Missing Secure Referrer-Policy Header,86,66.15%,130,All internal and non-HTML external URLs
-2026-04-12,Bad Content Type,0,0.00%,130,All internal and non-HTML external URLs
-2026-04-12,
-2026-04-12,Response Codes
-2026-04-12,All,266,100.00%,266,All Internal & External Crawled URLs
-2026-04-12,Blocked by Robots.txt,38,14.29%,266,All Internal & External Crawled URLs
-2026-04-12,Blocked Resource,0,0.00%,266,All Internal & External Crawled URLs
-2026-04-12,No Response,0,0.00%,266,All Internal & External Crawled URLs
-2026-04-12,Success (2xx),98,36.84%,266,All Internal & External Crawled URLs
-2026-04-12,Redirection (3xx),127,47.74%,266,All Internal & External Crawled URLs
-2026-04-12,Redirection (JavaScript),0,0.00%,266,All Internal & External Crawled URLs
-2026-04-12,Redirection (Meta Refresh),0,0.00%,266,All Internal & External Crawled URLs
-2026-04-12,Redirection (HTTP Refresh),0,0.00%,266,All Internal & External Crawled URLs
-2026-04-12,Client Error (4xx),3,1.13%,266,All Internal & External Crawled URLs
-2026-04-12,Server Error (5xx),0,0.00%,266,All Internal & External Crawled URLs
-2026-04-12,Internal All,130,48.87%,266,All Internal Crawled URLs
-2026-04-12,Internal Blocked by Robots.txt,0,0.00%,266,All Internal Crawled URLs
-2026-04-12,Internal Blocked Resource,0,0.00%,266,All Internal Crawled URLs
-2026-04-12,Internal No Response,0,0.00%,266,All Internal Crawled URLs
-2026-04-12,Internal Success (2xx),86,32.33%,266,All Internal Crawled URLs
-2026-04-12,Internal Redirection (3xx),44,16.54%,266,All Internal Crawled URLs
-2026-04-12,Internal Redirection (JavaScript),0,0.00%,266,All Internal Crawled URLs
-2026-04-12,Internal Redirection (Meta Refresh),0,0.00%,266,All Internal Crawled URLs
-2026-04-12,Internal Redirection (HTTP Refresh),0,0.00%,266,All Internal Crawled URLs
-2026-04-12,Internal Redirect Chain,0,0.00%,266,All Internal Crawled URLs
-2026-04-12,Internal Redirect Loop,0,0.00%,266,All Internal Crawled URLs
-2026-04-12,Internal Client Error (4xx),0,0.00%,266,All Internal Crawled URLs
-2026-04-12,Internal Server Error (5xx),0,0.00%,266,All Internal Crawled URLs
-2026-04-12,External All,136,51.13%,266,All External Crawled URLs
-2026-04-12,External Blocked by Robots.txt,38,14.29%,266,All External Crawled URLs
-2026-04-12,External Blocked Resource,0,0.00%,266,All External Crawled URLs
-2026-04-12,External No Response,0,0.00%,266,All External Crawled URLs
-2026-04-12,External Success (2xx),12,4.51%,266,All External Crawled URLs
-2026-04-12,External Redirection (3xx),83,31.20%,266,All External Crawled URLs
-2026-04-12,External Redirection (JavaScript),0,0.00%,266,All External Crawled URLs
-2026-04-12,External Redirection (Meta Refresh),0,0.00%,266,All External Crawled URLs
-2026-04-12,External Redirection (HTTP Refresh),0,0.00%,266,All External Crawled URLs
-2026-04-12,External Client Error (4xx),3,1.13%,266,All External Crawled URLs
-2026-04-12,External Server Error (5xx),0,0.00%,266,All External Crawled URLs
-2026-04-12,
-2026-04-12,URL
-2026-04-12,All,130,100.00%,130,Internal URLs
-2026-04-12,Non ASCII Characters,0,0.00%,130,Internal URLs
-2026-04-12,Underscores,0,0.00%,130,Internal URLs
-2026-04-12,Uppercase,0,0.00%,130,Internal URLs
-2026-04-12,Multiple Slashes,0,0.00%,130,Internal URLs
-2026-04-12,Repetitive Path,0,0.00%,130,Internal URLs
-2026-04-12,Contains Space,0,0.00%,130,Internal URLs
-2026-04-12,Internal Search,0,0.00%,130,Internal URLs
-2026-04-12,Parameters,0,0.00%,130,Internal URLs
-2026-04-12,Broken Bookmark,0,0.00%,130,Internal URLs
-2026-04-12,GA Tracking Parameters,0,0.00%,130,Internal URLs
-2026-04-12,Over 115 Characters,0,0.00%,130,Internal URLs
-2026-04-12,
-2026-04-12,Page Titles
-2026-04-12,All,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Missing,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Duplicate,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Over 60 Characters,3,6.82%,44,Internal HTML pages with 2xx response
-2026-04-12,Below 30 Characters,6,13.64%,44,Internal HTML pages with 2xx response
-2026-04-12,Over 561 Pixels,3,6.82%,44,Internal HTML pages with 2xx response
-2026-04-12,Below 200 Pixels,1,2.27%,44,Internal HTML pages with 2xx response
-2026-04-12,Same as H1,37,84.09%,44,Internal HTML pages with 2xx response
-2026-04-12,Multiple,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Outside <head>,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,Meta Description
-2026-04-12,All,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Missing,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Duplicate,2,4.55%,44,Internal HTML pages with 2xx response
-2026-04-12,Over 155 Characters,33,75.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Below 70 Characters,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Over 985 Pixels,28,63.64%,44,Internal HTML pages with 2xx response
-2026-04-12,Below 400 Pixels,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Multiple,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Outside <head>,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,Meta Keywords
-2026-04-12,All,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Missing,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Duplicate,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Multiple,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,H1
-2026-04-12,All,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Missing,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Duplicate,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Over 70 Characters,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Multiple,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Alt Text in H1,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Non-Sequential,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,H2
-2026-04-12,All,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Missing,3,6.82%,44,Internal HTML pages with 2xx response
-2026-04-12,Duplicate,2,4.55%,44,Internal HTML pages with 2xx response
-2026-04-12,Over 70 Characters,5,11.36%,44,Internal HTML pages with 2xx response
-2026-04-12,Multiple,41,93.18%,44,Internal HTML pages with 2xx response
-2026-04-12,Non-Sequential,1,2.27%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,Content
-2026-04-12,All,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Exact Duplicates,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Near Duplicates,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Semantically Similar,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Low Relevance Content,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Low Content Pages,1,2.27%,44,Internal HTML pages with 2xx response
-2026-04-12,Soft 404 Pages,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Spelling Errors,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Grammar Errors,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Readability Difficult,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Readability Very Difficult,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Lorem Ipsum Placeholder,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,Images
-2026-04-12,All,38,100.00%,38,Images with 2xx response
-2026-04-12,Over 100 KB,0,0.00%,38,Images with 2xx response
-2026-04-12,Missing Alt Text,0,0.00%,38,Images with 2xx response
-2026-04-12,Missing Alt Attribute,0,0.00%,38,Images with 2xx response
-2026-04-12,Alt Text Over 100 Characters,0,0.00%,38,Images with 2xx response
-2026-04-12,Background Images,0,0.00%,38,Images with 2xx response
-2026-04-12,Incorrectly Sized Images,0,0.00%,38,Images with 2xx response
-2026-04-12,Missing Size Attributes,37,97.37%,38,Images with 2xx response
-2026-04-12,
-2026-04-12,Canonicals
-2026-04-12,All,44,100.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,Contains Canonical,44,100.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,Self Referencing,44,100.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,Canonicalised,0,0.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,Missing,0,0.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,Multiple,0,0.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,Multiple Conflicting,0,0.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,Non-Indexable Canonical,0,0.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,Canonical Is Relative,0,0.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,Unlinked,0,0.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,Invalid Attribute In Annotation,0,0.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,Contains Fragment URL,0,0.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,Outside <head>,0,0.00%,44,Internal HTML or PDF pages with 2xx response
-2026-04-12,
-2026-04-12,Pagination
-2026-04-12,All,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Contains Pagination,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,First Page,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Paginated 2+ Pages,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Pagination URL Not in Anchor Tag,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Non-200 Pagination URLs,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Unlinked Pagination URLs,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Non-Indexable,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Multiple Pagination URLs,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Pagination Loop,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Sequence Error,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,Directives
-2026-04-12,All,86,100.00%,86,Internal URLs with 2xx response
-2026-04-12,Index,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,Noindex,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,Follow,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,Nofollow,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,None,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,NoArchive,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,NoSnippet,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,Max-Snippet,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,Max-Image-Preview,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,Max-Video-Preview,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,NoODP,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,NoYDIR,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,NoImageIndex,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,NoTranslate,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,Unavailable_After,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,Refresh,0,0.00%,87,Internal HTML pages with 2xx response
-2026-04-12,Outside <head>,0,0.00%,86,Internal URLs with 2xx response
-2026-04-12,
-2026-04-12,Hreflang
-2026-04-12,All,44,100.00%,44,Internal pages with 2xx response
-2026-04-12,Contains hreflang,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Non-200 hreflang URLs,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Unlinked hreflang URLs,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Missing Return Links,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Inconsistent Language & Region Return Links,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Non-Canonical Return Links,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Noindex Return Links,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Incorrect Language & Region Codes,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Multiple Entries,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Missing Self Reference,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Not Using Canonical,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Missing X-Default,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Missing,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,Outside <head>,0,0.00%,44,Internal pages with 2xx response
-2026-04-12,
-2026-04-12,JavaScript
-2026-04-12,All,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Pages with Blocked Resources,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Contains JavaScript Links,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Contains JavaScript Content,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Noindex Only in Original HTML,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Nofollow Only in Original HTML,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Canonical Only in Rendered HTML,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Canonical Mismatch,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Page Title Only in Rendered HTML,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Page Title Updated by JavaScript,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Meta Description Only in Rendered HTML,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Meta Description Updated by JavaScript,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,H1 Only in Rendered HTML,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,H1 Updated by JavaScript,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Uses Old AJAX Crawling Scheme URLs,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Uses Old AJAX Crawling Scheme Meta Fragment Tag,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Pages with JavaScript Errors,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Pages with JavaScript Warnings,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Pages with Chrome Issues,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,Links
-2026-04-12,All,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Pages With High Crawl Depth,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Pages Without Internal Outlinks,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Internal Nofollow Outlinks,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Internal Outlinks With No Anchor Text,1,2.27%,44,Internal HTML pages with 2xx response
-2026-04-12,Non-Descriptive Anchor Text In Internal Outlinks,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Pages With High External Outlinks,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Pages With High Internal Outlinks,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Follow & Nofollow Internal Inlinks To Page,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Internal Nofollow Inlinks Only,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Outlinks To Localhost,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Non-Indexable Page Inlinks Only,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,AMP
-2026-04-12,All,0,0.00%,0,Internal AMP URLs
-2026-04-12,Non-200 Response,0,0.00%,87,Internal HTML URLs
-2026-04-12,Missing Non-AMP Return Link,0,0.00%,0,Internal AMP URLs
-2026-04-12,Missing Canonical to Non-AMP,0,0.00%,0,Internal AMP URLs
-2026-04-12,Non-Indexable Canonical,0,0.00%,0,Internal AMP URLs
-2026-04-12,Indexable,0,0.00%,0,Internal AMP URLs
-2026-04-12,Non-Indexable,0,0.00%,0,Internal AMP URLs
-2026-04-12,Missing <html amp> Tag,0,0.00%,87,Internal HTML URLs
-2026-04-12,Missing/Invalid <!doctype html> Tag,0,0.00%,0,Internal AMP URLs
-2026-04-12,Missing <head> Tag,0,0.00%,0,Internal AMP URLs
-2026-04-12,Missing <body> Tag,0,0.00%,0,Internal AMP URLs
-2026-04-12,Missing Canonical,0,0.00%,0,Internal AMP URLs
-2026-04-12,Missing/Invalid <meta charset> Tag,0,0.00%,0,Internal AMP URLs
-2026-04-12,Missing/Invalid <meta viewport> Tag,0,0.00%,0,Internal AMP URLs
-2026-04-12,Missing/Invalid AMP Script,0,0.00%,0,Internal AMP URLs
-2026-04-12,Missing/Invalid AMP Boilerplate,0,0.00%,0,Internal AMP URLs
-2026-04-12,Contains Disallowed HTML,0,0.00%,0,Internal AMP URLs
-2026-04-12,Other Validation Errors,0,0.00%,0,Internal AMP URLs
-2026-04-12,
-2026-04-12,Structured Data
-2026-04-12,All,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Contains Structured Data,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Missing,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Validation Errors,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Validation Warnings,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Rich Result Validation Errors,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Rich Result Validation Warnings,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Parse Errors,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Microdata URLs,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,JSON-LD URLs,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,RDFa URLs,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,Rich Result Feature Detected,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,Sitemaps
-2026-04-12,All,88,100.00%,88,Internal HTML/XML pages
-2026-04-12,URLs in Sitemap,0,0.00%,88,Internal HTML/XML pages
-2026-04-12,URLs not in Sitemap,0,0.00%,88,Internal HTML/XML pages
-2026-04-12,Orphan URLs,0,0.00%,88,Internal HTML/XML pages
-2026-04-12,Non-Indexable URLs in Sitemap,0,0.00%,88,Internal HTML/XML pages
-2026-04-12,URLs in Multiple Sitemaps,0,0.00%,88,Internal HTML/XML pages
-2026-04-12,XML Sitemap with over 50k URLs,0,0.00%,88,Internal HTML/XML pages
-2026-04-12,XML Sitemap over 50MB,0,0.00%,88,Internal HTML/XML pages
-2026-04-12,
-2026-04-12,PageSpeed
-2026-04-12,All,44,100.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Document Request Latency,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,LCP Request Discovery,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Render Blocking Requests,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Network Dependency Tree,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Use Efficient Cache Lifetimes,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Layout Shift Culprits,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Optimize DOM Size,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Improve Image Delivery,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Forced Reflow,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Legacy JavaScript,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Duplicated JavaScript,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Font Display,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Avoid Enormous Network Payloads,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Minify CSS,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Minify JavaScript,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Reduce Unused CSS,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Reduce Unused JavaScript,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Reduce JavaScript Execution Time,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Minimize Main-Thread Work,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,Request Errors,0,0.00%,44,Internal HTML URLs with 2xx response
-2026-04-12,
-2026-04-12,Mobile
-2026-04-12,All,44,100.00%,44,
-2026-04-12,Viewport Not Set,0,0.00%,44,
-2026-04-12,Target Size,0,0.00%,44,
-2026-04-12,Content Not Sized Correctly,0,0.00%,44,
-2026-04-12,Illegible Font Size,0,0.00%,44,
-2026-04-12,Contains Unsupported Plugins,0,0.00%,44,
-2026-04-12,Mobile Alternate Link,0,0.00%,44,
-2026-04-12,
-2026-04-12,Accessibility
-2026-04-12,All,44,100.00%,44,
-2026-04-12,Accessibility Score Poor,0,0.00%,44,
-2026-04-12,Accessibility Score Needs Improvement,0,0.00%,44,
-2026-04-12,Accessibility Score Good,0,0.00%,44,
-2026-04-12,WCAG 2.0 A Violation,0,0.00%,44,
-2026-04-12,WCAG 2.0 AA Violation,0,0.00%,44,
-2026-04-12,WCAG 2.0 AAA Violation,0,0.00%,44,
-2026-04-12,WCAG 2.1 AA Violation,0,0.00%,44,
-2026-04-12,WCAG 2.2 AA Violation,0,0.00%,44,
-2026-04-12,Best Practice Violation,0,0.00%,44,
-2026-04-12,Accesskey Attribute Value Must Be Unique,0,0.00%,44,
-2026-04-12,Ensure Elements Marked Presentational Are Ignored,0,0.00%,44,
-2026-04-12,Elements Must Not Have Tabindex Greater Than Zero,0,0.00%,44,
-2026-04-12,Scrollable Region Requires Keyboard Access,0,0.00%,44,
-2026-04-12,Skip-link Target Should Exist & Be Focusable,0,0.00%,44,
-2026-04-12,Required ARIA Attributes Must Be Provided,0,0.00%,44,
-2026-04-12,Role=text Should Have No Focusable Descendants,0,0.00%,44,
-2026-04-12,ARIA Attribute Must Be Used As Specified For Role,0,0.00%,44,
-2026-04-12,ARIA Attributes Require Valid Values,0,0.00%,44,
-2026-04-12,ARIA Attributes Require Valid Names,0,0.00%,44,
-2026-04-12,ARIA Commands Require Accessible Name,0,0.00%,44,
-2026-04-12,ARIA Dialog & Alertdialog Require Accessible Name,0,0.00%,44,
-2026-04-12,ARIA Input Fields Require Accessible Name,0,0.00%,44,
-2026-04-12,ARIA Meter Nodes Require Accessible Name,0,0.00%,44,
-2026-04-12,ARIA Progressbar Nodes Require Accessible Name,0,0.00%,44,
-2026-04-12,ARIA Role Should Be Appropriate For Element,0,0.00%,44,
-2026-04-12,ARIA Roles Must Be Contained By Required Parent,0,0.00%,44,
-2026-04-12,ARIA Roles Require Valid Values,0,0.00%,44,
-2026-04-12,ARIA Toggle Fields Require Accessible Name,0,0.00%,44,
-2026-04-12,ARIA Tooltip Nodes Require Accessible Name,0,0.00%,44,
-2026-04-12,ARIA Treeitem Nodes Require Accessible Name,0,0.00%,44,
-2026-04-12,Certain ARIA Roles Must Contain Specific Children,0,0.00%,44,
-2026-04-12,Deprecated ARIA Roles Must Not Be Used,0,0.00%,44,
-2026-04-12,Aria-braille Require Non-braille Equivalent,0,0.00%,44,
-2026-04-12,Aria-hidden Elements Contains Focusable Elements,0,0.00%,44,
-2026-04-12,Aria-hidden=true Must Not Be Used In <body>,0,0.00%,44,
-2026-04-12,Elements Must Only Use Permitted ARIA Attributes,0,0.00%,44,
-2026-04-12,Elements Must Use Allowed ARIA Attributes,0,0.00%,44,
-2026-04-12,IDs Used In ARIA & Labels Must Be Unique,0,0.00%,44,
-2026-04-12,Page Requires Means To Bypass Repeated Blocks,0,0.00%,44,
-2026-04-12,All Page Content Must Be Contained By Landmarks,0,0.00%,44,
-2026-04-12,Page Requires One Main Landmark,0,0.00%,44,
-2026-04-12,Page Must Not Have More Than One Banner Landmark,0,0.00%,44,
-2026-04-12,Banner Landmark Must Not Be In Another Landmark,0,0.00%,44,
-2026-04-12,Page Must Not Have Multiple Contentinfo Landmarks,0,0.00%,44,
-2026-04-12,Page Requires At Most One Main Landmark,0,0.00%,44,
-2026-04-12,Complementary Landmarks & Asides Must Be Top Level,0,0.00%,44,
-2026-04-12,Contentinfo Landmark Must Be Top Level Landmark,0,0.00%,44,
-2026-04-12,Main Landmark Must Not Be In Another Landmark,0,0.00%,44,
-2026-04-12,Landmarks Require Unique Role Or Accessible Name,0,0.00%,44,
-2026-04-12,Form Field Must Not Have Multiple Label Elements,0,0.00%,44,
-2026-04-12,Form <input> Elements Require Labels,0,0.00%,44,
-2026-04-12,Form Elements Should Have Visible Label,0,0.00%,44,
-2026-04-12,Autocomplete Attribute Must Be Used Correctly,0,0.00%,44,
-2026-04-12,Frames Require Title Attribute,0,0.00%,44,
-2026-04-12,Frames Require Unique Title Attribute,0,0.00%,44,
-2026-04-12,Frames Should Be Tested With axe-core,0,0.00%,44,
-2026-04-12,Frames With Focusable Content Must Not Use tabindex=-1,0,0.00%,44,
-2026-04-12,Page Must Contain <title>,0,0.00%,44,
-2026-04-12,Page Must Contain <h1>,0,0.00%,44,
-2026-04-12,Heading Levels Should Only Increase By One,0,0.00%,44,
-2026-04-12,Headings Should Not Be Empty,0,0.00%,44,
-2026-04-12,Meta Viewport Should Allow Zoom & Scale Up to 500%,0,0.00%,44,
-2026-04-12,Meta Viewport Zoom & Scaling Disabled,0,0.00%,44,
-2026-04-12,HTML Element Lang Attribute Value Must Be Valid,0,0.00%,44,
-2026-04-12,HTML Element Requires Lang Attribute,0,0.00%,44,
-2026-04-12,HTML Lang & XML Lang Value Should Match,0,0.00%,44,
-2026-04-12,Lang Attribute Requires Valid Value,0,0.00%,44,
-2026-04-12,Delayed Meta Refresh Must Not Be Used,0,0.00%,44,
-2026-04-12,Timed Meta Refresh Must Not Exist,0,0.00%,44,
-2026-04-12,Image Button Requires Alternate Text,0,0.00%,44,
-2026-04-12,Images Require Alternate Text,0,0.00%,44,
-2026-04-12,<object> Elements Require Alternate Text,0,0.00%,44,
-2026-04-12,Active <area> Elements Require Alternate Text,0,0.00%,44,
-2026-04-12,Alt Text Should Not Be Repeated As Text,0,0.00%,44,
-2026-04-12,Elements Marked role=img Require Alternate Text,0,0.00%,44,
-2026-04-12,SVG Images & Graphics Require Accessible Text,0,0.00%,44,
-2026-04-12,Server-Side Image Maps Must Not Be Used,0,0.00%,44,
-2026-04-12,<video> Elements Require <track> For Captions,0,0.00%,44,
-2026-04-12,<video> or <audio> Elements Must Not Auto-play,0,0.00%,44,
-2026-04-12,Buttons Require Discernible Text,0,0.00%,44,
-2026-04-12,Input Buttons Require Discernible Text,0,0.00%,44,
-2026-04-12,Inline Text Spacing Must Be Adjustable,0,0.00%,44,
-2026-04-12,Links Must Be Distinguishable,0,0.00%,44,
-2026-04-12,Links Require Discernible Text,0,0.00%,44,
-2026-04-12,Links With Same Accessible Name,0,0.00%,44,
-2026-04-12,Select Element Requires Accessible Name,0,0.00%,44,
-2026-04-12,Summary Elements Require Discernible Text,0,0.00%,44,
-2026-04-12,Deprecated <marquee> Element Must Not Be Used,0,0.00%,44,
-2026-04-12,<blink> Elements Deprecated & Must Not Be Used,0,0.00%,44,
-2026-04-12,Text Requires Higher Color Contrast Ratio,0,0.00%,44,
-2026-04-12,Text Requires Higher Color Contrast to Background,0,0.00%,44,
-2026-04-12,Touch Targets Require Sufficient Size & Spacing,0,0.00%,44,
-2026-04-12,Interactive Controls Must Not Be Nested,0,0.00%,44,
-2026-04-12,List Items Must Be Contained In List Elements,0,0.00%,44,
-2026-04-12,Lists Must Only Contain <li> Content Elements,0,0.00%,44,
-2026-04-12,<dl> Must Only Have Ordered <dt> & <dd> Groups,0,0.00%,44,
-2026-04-12,<dt> & <dd> Elements Must Be Contained by <dl>,0,0.00%,44,
-2026-04-12,<th> Element Requires Associated Data Cells,0,0.00%,44,
-2026-04-12,Table Header Attr Must Refer To Cell In Same Table,0,0.00%,44,
-2026-04-12,Table Headers Require Discernible Text,0,0.00%,44,
-2026-04-12,Table With Identical Summary & Caption Text,0,0.00%,44,
-2026-04-12,Scope Attribute Should Be Used Correctly On Tables,0,0.00%,44,
-2026-04-12,
-2026-04-12,Custom Search
-2026-04-12,All,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,Custom Extraction
-2026-04-12,All,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,Custom JavaScript
-2026-04-12,All,86,100.00%,86,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,Analytics
-2026-04-12,All,88,100.00%,88,Internal URLs with associated Google Analytics data
-2026-04-12,Sessions Above 0,0,0.00%,88,Internal URLs with associated Google Analytics data
-2026-04-12,Bounce Rate Above 70%,0,0.00%,88,Internal URLs with associated Google Analytics data
-2026-04-12,No GA Data,0,0.00%,88,Internal URLs with associated Google Analytics data
-2026-04-12,Non-Indexable with GA Data,0,0.00%,88,Internal URLs with associated Google Analytics data
-2026-04-12,Orphan URLs,0,0.00%,88,Internal URLs with associated Google Analytics data
-2026-04-12,
-2026-04-12,Search Console
-2026-04-12,All,88,100.00%,88,Internal URLs with associated Google Search Console data
-2026-04-12,Clicks Above 0,0,0.00%,88,Internal URLs with associated Google Search Console data
-2026-04-12,No Search Analytics Data,0,0.00%,88,Internal URLs with associated Google Search Console data
-2026-04-12,Non-Indexable with Search Analytics Data,0,0.00%,88,Internal URLs with associated Google Search Console data
-2026-04-12,Orphan URLs,0,0.00%,88,Internal URLs with associated Google Search Console data
-2026-04-12,URL is Not on Google,0,0.00%,88,Internal URLs with associated Google Search Console data
-2026-04-12,Indexable URL Not Indexed,0,0.00%,88,Internal URLs with associated Google Search Console data
-2026-04-12,URL is on Google But Has Issues,0,0.00%,88,Internal URLs with associated Google Search Console data
-2026-04-12,User-Declared Canonical Not Selected,0,0.00%,88,Internal URLs with associated Google Search Console data
-2026-04-12,Page is Not Mobile Friendly,0,0.00%,88,Internal URLs with associated Google Search Console data
-2026-04-12,AMP URL Invalid,0,0.00%,88,Internal URLs with associated Google Search Console data
-2026-04-12,Rich Result Invalid,0,0.00%,88,Internal URLs with associated Google Search Console data
-2026-04-12,
-2026-04-12,Validation
-2026-04-12,All,130,100.00%,130,Internal URLs with 2xx response
-2026-04-12,Invalid HTML Elements in <head>,0,0.00%,130,Internal URLs with 2xx response
-2026-04-12,<body> Element Preceding <html>,0,0.00%,130,Internal URLs with 2xx response
-2026-04-12,<head> Not First In <html> Element,0,0.00%,130,Internal URLs with 2xx response
-2026-04-12,Missing <head> Tag,0,0.00%,130,Internal URLs with 2xx response
-2026-04-12,Multiple <head> Tags,0,0.00%,130,Internal URLs with 2xx response
-2026-04-12,Missing <body> Tag,0,0.00%,130,Internal URLs with 2xx response
-2026-04-12,Multiple <body> Tags,0,0.00%,130,Internal URLs with 2xx response
-2026-04-12,HTML Document Over 2MB,0,0.00%,130,Internal URLs with 2xx response
-2026-04-12,Resource Over 2MB,0,0.00%,130,Internal URLs with 2xx response
-2026-04-12,High Carbon Rating,0,0.00%,130,Internal URLs with 2xx response
-2026-04-12,
-2026-04-12,Link Metrics
-2026-04-12,All,88,100.00%,88,Internal HTML/PDF pages
-2026-04-12,
-2026-04-12,AI
-2026-04-12,All,86,100.00%,86,Internal HTML URLs with 2xx response
-2026-04-12,
-2026-04-12,
-2026-04-12,Depth (Clicks from Start URL)
-2026-04-12,0,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,1,1,2.27%,44,Internal HTML pages with 2xx response
-2026-04-12,2,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,3,5,11.36%,44,Internal HTML pages with 2xx response
-2026-04-12,4,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,5,37,84.09%,44,Internal HTML pages with 2xx response
-2026-04-12,6,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,7,1,2.27%,44,Internal HTML pages with 2xx response
-2026-04-12,8,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,9,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,10+,0,0.00%,44,Internal HTML pages with 2xx response
-2026-04-12,
-2026-04-12,Inlinks (Top 20 URLs)
-2026-04-12,https://spilou.com/,44,100.00%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/,38,86.36%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/compte-google-my-business/,24,54.55%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/fiche-google-my-business/,17,38.64%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/repondre-avis-google/,17,38.64%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/ameliorer-referencement-google-my-business/,17,38.64%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/optimisation-fiche-google-my-business/,16,36.36%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/avis-google/,15,34.09%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/augmenter-visibilite-web/,14,31.82%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/ajouter-votre-entreprise-sur-google-my-business/,14,31.82%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/statistique-recherches-google/,14,31.82%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/demander-avis-google/,13,29.55%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/ajouter-des-photos-google-my-business/,13,29.55%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/services-fiche-google-my-business/,13,29.55%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/modifier-horaires-ouverture-google-my-business/,13,29.55%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/resoudre-la-suspension-compte-google/,12,27.27%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/enlever-compte-google-sans-le-supprimer/,12,27.27%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/supprimer-fiche-etablissement/,12,27.27%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/deconnecter-un-compte-google/,12,27.27%,44,Internal HTML pages with 2xx response
-2026-04-12,https://spilou.com/blog/posts/guide-pour-contacter-google-my-business/,12,27.27%,44,Internal HTML pages with 2xx response
-2026-04-12,
+crawl_date,metric,value,percentage
+2026-04-12,Site Crawled,http://spilou.com/,
+2026-04-12,Start Date,2026-04-12,
+2026-04-12,Start Time,22:20:09,
+2026-04-12,Last Modified Date,2026-04-12,
+2026-04-12,Last Modified Time,22:20:26,
+2026-04-12,Elapsed,00:00:16,
+2026-04-12,Report Date,2026-04-12,
+2026-04-12,Report Time,22:20:26,
+2026-04-12,Summary,URLs,% of Total
+2026-04-12,Total URLs Encountered,266,100.00%
+2026-04-12,Total URLs Crawled,228,85.71%
+2026-04-12,Total Internal blocked by robots.txt,0,0.00%
+2026-04-12,Total External blocked by robots.txt,38,14.29%
+2026-04-12,URLs Displayed,266,100.00%
+2026-04-12,Total Internal URLs,130,48.87%
+2026-04-12,Total External URLs,136,51.13%
+2026-04-12,Total Internal Indexable URLs,86,32.33%
+2026-04-12,Total Internal Non-Indexable URLs,44,16.54%
+2026-04-12,All,130,100.00%
+2026-04-12,HTML,87,66.92%
+2026-04-12,JavaScript,1,0.77%
+2026-04-12,CSS,3,2.31%
+2026-04-12,Images,38,29.23%
+2026-04-12,Media,0,0.00%
+2026-04-12,Fonts,0,0.00%
+2026-04-12,XML,0,0.00%
+2026-04-12,PDF,0,0.00%
+2026-04-12,Plugins,0,0.00%
+2026-04-12,Other,1,0.77%
+2026-04-12,Unknown,0,0.00%
+2026-04-12,All,136,100.00%
+2026-04-12,HTML,56,41.18%
+2026-04-12,JavaScript,0,0.00%
+2026-04-12,CSS,0,0.00%
+2026-04-12,Images,0,0.00%
+2026-04-12,Media,0,0.00%
+2026-04-12,Fonts,0,0.00%
+2026-04-12,XML,0,0.00%
+2026-04-12,PDF,0,0.00%
+2026-04-12,Plugins,0,0.00%
+2026-04-12,Other,42,30.88%
+2026-04-12,Unknown,38,27.94%
+2026-04-12,All,130,100.00%
+2026-04-12,HTTP URLs,1,0.77%
+2026-04-12,HTTPS URLs,129,99.23%
+2026-04-12,Mixed Content,0,0.00%
+2026-04-12,Form URL Insecure,0,0.00%
+2026-04-12,Form on HTTP URL,0,0.00%
+2026-04-12,Unsafe Cross-Origin Links,0,0.00%
+2026-04-12,Protocol-Relative Resource Links,0,0.00%
+2026-04-12,Missing HSTS Header,0,0.00%
+2026-04-12,Missing Content-Security-Policy Header,86,66.15%
+2026-04-12,Missing X-Content-Type-Options Header,86,66.15%
+2026-04-12,Missing X-Frame-Options Header,86,66.15%
+2026-04-12,Missing Secure Referrer-Policy Header,86,66.15%
+2026-04-12,Bad Content Type,0,0.00%
+2026-04-12,All,266,100.00%
+2026-04-12,Blocked by Robots.txt,38,14.29%
+2026-04-12,Blocked Resource,0,0.00%
+2026-04-12,No Response,0,0.00%
+2026-04-12,Success (2xx),98,36.84%
+2026-04-12,Redirection (3xx),126,47.37%
+2026-04-12,Redirection (JavaScript),0,0.00%
+2026-04-12,Redirection (Meta Refresh),0,0.00%
+2026-04-12,Redirection (HTTP Refresh),0,0.00%
+2026-04-12,Client Error (4xx),3,1.13%
+2026-04-12,Server Error (5xx),0,0.00%
+2026-04-12,Internal All,130,48.87%
+2026-04-12,Internal Blocked by Robots.txt,0,0.00%
+2026-04-12,Internal Blocked Resource,0,0.00%
+2026-04-12,Internal No Response,0,0.00%
+2026-04-12,Internal Success (2xx),86,32.33%
+2026-04-12,Internal Redirection (3xx),44,16.54%
+2026-04-12,Internal Redirection (JavaScript),0,0.00%
+2026-04-12,Internal Redirection (Meta Refresh),0,0.00%
+2026-04-12,Internal Redirection (HTTP Refresh),0,0.00%
+2026-04-12,Internal Redirect Chain,0,0.00%
+2026-04-12,Internal Redirect Loop,0,0.00%
+2026-04-12,Internal Client Error (4xx),0,0.00%
+2026-04-12,Internal Server Error (5xx),0,0.00%
+2026-04-12,External All,136,51.13%
+2026-04-12,External Blocked by Robots.txt,38,14.29%
+2026-04-12,External Blocked Resource,0,0.00%
+2026-04-12,External No Response,0,0.00%
+2026-04-12,External Success (2xx),12,4.51%
+2026-04-12,External Redirection (3xx),82,30.83%
+2026-04-12,External Redirection (JavaScript),0,0.00%
+2026-04-12,External Redirection (Meta Refresh),0,0.00%
+2026-04-12,External Redirection (HTTP Refresh),0,0.00%
+2026-04-12,External Client Error (4xx),3,1.13%
+2026-04-12,External Server Error (5xx),0,0.00%
+2026-04-12,All,130,100.00%
+2026-04-12,Non ASCII Characters,0,0.00%
+2026-04-12,Underscores,0,0.00%
+2026-04-12,Uppercase,0,0.00%
+2026-04-12,Multiple Slashes,0,0.00%
+2026-04-12,Repetitive Path,0,0.00%
+2026-04-12,Contains Space,0,0.00%
+2026-04-12,Internal Search,0,0.00%
+2026-04-12,Parameters,0,0.00%
+2026-04-12,Broken Bookmark,0,0.00%
+2026-04-12,GA Tracking Parameters,0,0.00%
+2026-04-12,Over 115 Characters,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Missing,0,0.00%
+2026-04-12,Duplicate,0,0.00%
+2026-04-12,Over 60 Characters,3,6.82%
+2026-04-12,Below 30 Characters,6,13.64%
+2026-04-12,Over 561 Pixels,3,6.82%
+2026-04-12,Below 200 Pixels,1,2.27%
+2026-04-12,Same as H1,37,84.09%
+2026-04-12,Multiple,0,0.00%
+2026-04-12,Outside <head>,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Missing,0,0.00%
+2026-04-12,Duplicate,2,4.55%
+2026-04-12,Over 155 Characters,33,75.00%
+2026-04-12,Below 70 Characters,0,0.00%
+2026-04-12,Over 985 Pixels,28,63.64%
+2026-04-12,Below 400 Pixels,0,0.00%
+2026-04-12,Multiple,0,0.00%
+2026-04-12,Outside <head>,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Missing,44,100.00%
+2026-04-12,Duplicate,0,0.00%
+2026-04-12,Multiple,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Missing,0,0.00%
+2026-04-12,Duplicate,0,0.00%
+2026-04-12,Over 70 Characters,0,0.00%
+2026-04-12,Multiple,0,0.00%
+2026-04-12,Alt Text in H1,0,0.00%
+2026-04-12,Non-Sequential,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Missing,3,6.82%
+2026-04-12,Duplicate,2,4.55%
+2026-04-12,Over 70 Characters,5,11.36%
+2026-04-12,Multiple,41,93.18%
+2026-04-12,Non-Sequential,1,2.27%
+2026-04-12,All,44,100.00%
+2026-04-12,Exact Duplicates,0,0.00%
+2026-04-12,Near Duplicates,0,0.00%
+2026-04-12,Semantically Similar,0,0.00%
+2026-04-12,Low Relevance Content,0,0.00%
+2026-04-12,Low Content Pages,1,2.27%
+2026-04-12,Soft 404 Pages,0,0.00%
+2026-04-12,Spelling Errors,0,0.00%
+2026-04-12,Grammar Errors,0,0.00%
+2026-04-12,Readability Difficult,0,0.00%
+2026-04-12,Readability Very Difficult,0,0.00%
+2026-04-12,Lorem Ipsum Placeholder,0,0.00%
+2026-04-12,All,38,100.00%
+2026-04-12,Over 100 KB,0,0.00%
+2026-04-12,Missing Alt Text,0,0.00%
+2026-04-12,Missing Alt Attribute,0,0.00%
+2026-04-12,Alt Text Over 100 Characters,0,0.00%
+2026-04-12,Background Images,0,0.00%
+2026-04-12,Incorrectly Sized Images,0,0.00%
+2026-04-12,Missing Size Attributes,37,97.37%
+2026-04-12,All,44,100.00%
+2026-04-12,Contains Canonical,44,100.00%
+2026-04-12,Self Referencing,44,100.00%
+2026-04-12,Canonicalised,0,0.00%
+2026-04-12,Missing,0,0.00%
+2026-04-12,Multiple,0,0.00%
+2026-04-12,Multiple Conflicting,0,0.00%
+2026-04-12,Non-Indexable Canonical,0,0.00%
+2026-04-12,Canonical Is Relative,0,0.00%
+2026-04-12,Unlinked,0,0.00%
+2026-04-12,Invalid Attribute In Annotation,0,0.00%
+2026-04-12,Contains Fragment URL,0,0.00%
+2026-04-12,Outside <head>,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Contains Pagination,0,0.00%
+2026-04-12,First Page,0,0.00%
+2026-04-12,Paginated 2+ Pages,0,0.00%
+2026-04-12,Pagination URL Not in Anchor Tag,0,0.00%
+2026-04-12,Non-200 Pagination URLs,0,0.00%
+2026-04-12,Unlinked Pagination URLs,0,0.00%
+2026-04-12,Non-Indexable,0,0.00%
+2026-04-12,Multiple Pagination URLs,0,0.00%
+2026-04-12,Pagination Loop,0,0.00%
+2026-04-12,Sequence Error,0,0.00%
+2026-04-12,All,86,100.00%
+2026-04-12,Index,0,0.00%
+2026-04-12,Noindex,0,0.00%
+2026-04-12,Follow,0,0.00%
+2026-04-12,Nofollow,0,0.00%
+2026-04-12,None,0,0.00%
+2026-04-12,NoArchive,0,0.00%
+2026-04-12,NoSnippet,0,0.00%
+2026-04-12,Max-Snippet,0,0.00%
+2026-04-12,Max-Image-Preview,0,0.00%
+2026-04-12,Max-Video-Preview,0,0.00%
+2026-04-12,NoODP,0,0.00%
+2026-04-12,NoYDIR,0,0.00%
+2026-04-12,NoImageIndex,0,0.00%
+2026-04-12,NoTranslate,0,0.00%
+2026-04-12,Unavailable_After,0,0.00%
+2026-04-12,Refresh,0,0.00%
+2026-04-12,Outside <head>,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Contains hreflang,0,0.00%
+2026-04-12,Non-200 hreflang URLs,0,0.00%
+2026-04-12,Unlinked hreflang URLs,0,0.00%
+2026-04-12,Missing Return Links,0,0.00%
+2026-04-12,Inconsistent Language & Region Return Links,0,0.00%
+2026-04-12,Non-Canonical Return Links,0,0.00%
+2026-04-12,Noindex Return Links,0,0.00%
+2026-04-12,Incorrect Language & Region Codes,0,0.00%
+2026-04-12,Multiple Entries,0,0.00%
+2026-04-12,Missing Self Reference,0,0.00%
+2026-04-12,Not Using Canonical,0,0.00%
+2026-04-12,Missing X-Default,0,0.00%
+2026-04-12,Missing,0,0.00%
+2026-04-12,Outside <head>,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Pages with Blocked Resources,0,0.00%
+2026-04-12,Contains JavaScript Links,0,0.00%
+2026-04-12,Contains JavaScript Content,0,0.00%
+2026-04-12,Noindex Only in Original HTML,0,0.00%
+2026-04-12,Nofollow Only in Original HTML,0,0.00%
+2026-04-12,Canonical Only in Rendered HTML,0,0.00%
+2026-04-12,Canonical Mismatch,0,0.00%
+2026-04-12,Page Title Only in Rendered HTML,0,0.00%
+2026-04-12,Page Title Updated by JavaScript,0,0.00%
+2026-04-12,Meta Description Only in Rendered HTML,0,0.00%
+2026-04-12,Meta Description Updated by JavaScript,0,0.00%
+2026-04-12,H1 Only in Rendered HTML,0,0.00%
+2026-04-12,H1 Updated by JavaScript,0,0.00%
+2026-04-12,Uses Old AJAX Crawling Scheme URLs,0,0.00%
+2026-04-12,Uses Old AJAX Crawling Scheme Meta Fragment Tag,0,0.00%
+2026-04-12,Pages with JavaScript Errors,0,0.00%
+2026-04-12,Pages with JavaScript Warnings,0,0.00%
+2026-04-12,Pages with Chrome Issues,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Pages With High Crawl Depth,0,0.00%
+2026-04-12,Pages Without Internal Outlinks,0,0.00%
+2026-04-12,Internal Nofollow Outlinks,0,0.00%
+2026-04-12,Internal Outlinks With No Anchor Text,1,2.27%
+2026-04-12,Non-Descriptive Anchor Text In Internal Outlinks,0,0.00%
+2026-04-12,Pages With High External Outlinks,0,0.00%
+2026-04-12,Pages With High Internal Outlinks,0,0.00%
+2026-04-12,Follow & Nofollow Internal Inlinks To Page,0,0.00%
+2026-04-12,Internal Nofollow Inlinks Only,0,0.00%
+2026-04-12,Outlinks To Localhost,0,0.00%
+2026-04-12,Non-Indexable Page Inlinks Only,0,0.00%
+2026-04-12,All,0,0.00%
+2026-04-12,Non-200 Response,0,0.00%
+2026-04-12,Missing Non-AMP Return Link,0,0.00%
+2026-04-12,Missing Canonical to Non-AMP,0,0.00%
+2026-04-12,Non-Indexable Canonical,0,0.00%
+2026-04-12,Indexable,0,0.00%
+2026-04-12,Non-Indexable,0,0.00%
+2026-04-12,Missing <html amp> Tag,0,0.00%
+2026-04-12,Missing/Invalid <!doctype html> Tag,0,0.00%
+2026-04-12,Missing <head> Tag,0,0.00%
+2026-04-12,Missing <body> Tag,0,0.00%
+2026-04-12,Missing Canonical,0,0.00%
+2026-04-12,Missing/Invalid <meta charset> Tag,0,0.00%
+2026-04-12,Missing/Invalid <meta viewport> Tag,0,0.00%
+2026-04-12,Missing/Invalid AMP Script,0,0.00%
+2026-04-12,Missing/Invalid AMP Boilerplate,0,0.00%
+2026-04-12,Contains Disallowed HTML,0,0.00%
+2026-04-12,Other Validation Errors,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Contains Structured Data,0,0.00%
+2026-04-12,Missing,0,0.00%
+2026-04-12,Validation Errors,0,0.00%
+2026-04-12,Validation Warnings,0,0.00%
+2026-04-12,Rich Result Validation Errors,0,0.00%
+2026-04-12,Rich Result Validation Warnings,0,0.00%
+2026-04-12,Parse Errors,0,0.00%
+2026-04-12,Microdata URLs,0,0.00%
+2026-04-12,JSON-LD URLs,0,0.00%
+2026-04-12,RDFa URLs,0,0.00%
+2026-04-12,Rich Result Feature Detected,0,0.00%
+2026-04-12,All,88,100.00%
+2026-04-12,URLs in Sitemap,0,0.00%
+2026-04-12,URLs not in Sitemap,0,0.00%
+2026-04-12,Orphan URLs,0,0.00%
+2026-04-12,Non-Indexable URLs in Sitemap,0,0.00%
+2026-04-12,URLs in Multiple Sitemaps,0,0.00%
+2026-04-12,XML Sitemap with over 50k URLs,0,0.00%
+2026-04-12,XML Sitemap over 50MB,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Document Request Latency,0,0.00%
+2026-04-12,LCP Request Discovery,0,0.00%
+2026-04-12,Render Blocking Requests,0,0.00%
+2026-04-12,Network Dependency Tree,0,0.00%
+2026-04-12,Use Efficient Cache Lifetimes,0,0.00%
+2026-04-12,Layout Shift Culprits,0,0.00%
+2026-04-12,Optimize DOM Size,0,0.00%
+2026-04-12,Improve Image Delivery,0,0.00%
+2026-04-12,Forced Reflow,0,0.00%
+2026-04-12,Legacy JavaScript,0,0.00%
+2026-04-12,Duplicated JavaScript,0,0.00%
+2026-04-12,Font Display,0,0.00%
+2026-04-12,Avoid Enormous Network Payloads,0,0.00%
+2026-04-12,Minify CSS,0,0.00%
+2026-04-12,Minify JavaScript,0,0.00%
+2026-04-12,Reduce Unused CSS,0,0.00%
+2026-04-12,Reduce Unused JavaScript,0,0.00%
+2026-04-12,Reduce JavaScript Execution Time,0,0.00%
+2026-04-12,Minimize Main-Thread Work,0,0.00%
+2026-04-12,Request Errors,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Viewport Not Set,0,0.00%
+2026-04-12,Target Size,0,0.00%
+2026-04-12,Content Not Sized Correctly,0,0.00%
+2026-04-12,Illegible Font Size,0,0.00%
+2026-04-12,Contains Unsupported Plugins,0,0.00%
+2026-04-12,Mobile Alternate Link,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,Accessibility Score Poor,0,0.00%
+2026-04-12,Accessibility Score Needs Improvement,0,0.00%
+2026-04-12,Accessibility Score Good,0,0.00%
+2026-04-12,WCAG 2.0 A Violation,0,0.00%
+2026-04-12,WCAG 2.0 AA Violation,0,0.00%
+2026-04-12,WCAG 2.0 AAA Violation,0,0.00%
+2026-04-12,WCAG 2.1 AA Violation,0,0.00%
+2026-04-12,WCAG 2.2 AA Violation,0,0.00%
+2026-04-12,Best Practice Violation,0,0.00%
+2026-04-12,Accesskey Attribute Value Must Be Unique,0,0.00%
+2026-04-12,Ensure Elements Marked Presentational Are Ignored,0,0.00%
+2026-04-12,Elements Must Not Have Tabindex Greater Than Zero,0,0.00%
+2026-04-12,Scrollable Region Requires Keyboard Access,0,0.00%
+2026-04-12,Skip-link Target Should Exist & Be Focusable,0,0.00%
+2026-04-12,Required ARIA Attributes Must Be Provided,0,0.00%
+2026-04-12,Role=text Should Have No Focusable Descendants,0,0.00%
+2026-04-12,ARIA Attribute Must Be Used As Specified For Role,0,0.00%
+2026-04-12,ARIA Attributes Require Valid Values,0,0.00%
+2026-04-12,ARIA Attributes Require Valid Names,0,0.00%
+2026-04-12,ARIA Commands Require Accessible Name,0,0.00%
+2026-04-12,ARIA Dialog & Alertdialog Require Accessible Name,0,0.00%
+2026-04-12,ARIA Input Fields Require Accessible Name,0,0.00%
+2026-04-12,ARIA Meter Nodes Require Accessible Name,0,0.00%
+2026-04-12,ARIA Progressbar Nodes Require Accessible Name,0,0.00%
+2026-04-12,ARIA Role Should Be Appropriate For Element,0,0.00%
+2026-04-12,ARIA Roles Must Be Contained By Required Parent,0,0.00%
+2026-04-12,ARIA Roles Require Valid Values,0,0.00%
+2026-04-12,ARIA Toggle Fields Require Accessible Name,0,0.00%
+2026-04-12,ARIA Tooltip Nodes Require Accessible Name,0,0.00%
+2026-04-12,ARIA Treeitem Nodes Require Accessible Name,0,0.00%
+2026-04-12,Certain ARIA Roles Must Contain Specific Children,0,0.00%
+2026-04-12,Deprecated ARIA Roles Must Not Be Used,0,0.00%
+2026-04-12,Aria-braille Require Non-braille Equivalent,0,0.00%
+2026-04-12,Aria-hidden Elements Contains Focusable Elements,0,0.00%
+2026-04-12,Aria-hidden=true Must Not Be Used In <body>,0,0.00%
+2026-04-12,Elements Must Only Use Permitted ARIA Attributes,0,0.00%
+2026-04-12,Elements Must Use Allowed ARIA Attributes,0,0.00%
+2026-04-12,IDs Used In ARIA & Labels Must Be Unique,0,0.00%
+2026-04-12,Page Requires Means To Bypass Repeated Blocks,0,0.00%
+2026-04-12,All Page Content Must Be Contained By Landmarks,0,0.00%
+2026-04-12,Page Requires One Main Landmark,0,0.00%
+2026-04-12,Page Must Not Have More Than One Banner Landmark,0,0.00%
+2026-04-12,Banner Landmark Must Not Be In Another Landmark,0,0.00%
+2026-04-12,Page Must Not Have Multiple Contentinfo Landmarks,0,0.00%
+2026-04-12,Page Requires At Most One Main Landmark,0,0.00%
+2026-04-12,Complementary Landmarks & Asides Must Be Top Level,0,0.00%
+2026-04-12,Contentinfo Landmark Must Be Top Level Landmark,0,0.00%
+2026-04-12,Main Landmark Must Not Be In Another Landmark,0,0.00%
+2026-04-12,Landmarks Require Unique Role Or Accessible Name,0,0.00%
+2026-04-12,Form Field Must Not Have Multiple Label Elements,0,0.00%
+2026-04-12,Form <input> Elements Require Labels,0,0.00%
+2026-04-12,Form Elements Should Have Visible Label,0,0.00%
+2026-04-12,Autocomplete Attribute Must Be Used Correctly,0,0.00%
+2026-04-12,Frames Require Title Attribute,0,0.00%
+2026-04-12,Frames Require Unique Title Attribute,0,0.00%
+2026-04-12,Frames Should Be Tested With axe-core,0,0.00%
+2026-04-12,Frames With Focusable Content Must Not Use tabindex=-1,0,0.00%
+2026-04-12,Page Must Contain <title>,0,0.00%
+2026-04-12,Page Must Contain <h1>,0,0.00%
+2026-04-12,Heading Levels Should Only Increase By One,0,0.00%
+2026-04-12,Headings Should Not Be Empty,0,0.00%
+2026-04-12,Meta Viewport Should Allow Zoom & Scale Up to 500%,0,0.00%
+2026-04-12,Meta Viewport Zoom & Scaling Disabled,0,0.00%
+2026-04-12,HTML Element Lang Attribute Value Must Be Valid,0,0.00%
+2026-04-12,HTML Element Requires Lang Attribute,0,0.00%
+2026-04-12,HTML Lang & XML Lang Value Should Match,0,0.00%
+2026-04-12,Lang Attribute Requires Valid Value,0,0.00%
+2026-04-12,Delayed Meta Refresh Must Not Be Used,0,0.00%
+2026-04-12,Timed Meta Refresh Must Not Exist,0,0.00%
+2026-04-12,Image Button Requires Alternate Text,0,0.00%
+2026-04-12,Images Require Alternate Text,0,0.00%
+2026-04-12,<object> Elements Require Alternate Text,0,0.00%
+2026-04-12,Active <area> Elements Require Alternate Text,0,0.00%
+2026-04-12,Alt Text Should Not Be Repeated As Text,0,0.00%
+2026-04-12,Elements Marked role=img Require Alternate Text,0,0.00%
+2026-04-12,SVG Images & Graphics Require Accessible Text,0,0.00%
+2026-04-12,Server-Side Image Maps Must Not Be Used,0,0.00%
+2026-04-12,<video> Elements Require <track> For Captions,0,0.00%
+2026-04-12,<video> or <audio> Elements Must Not Auto-play,0,0.00%
+2026-04-12,Buttons Require Discernible Text,0,0.00%
+2026-04-12,Input Buttons Require Discernible Text,0,0.00%
+2026-04-12,Inline Text Spacing Must Be Adjustable,0,0.00%
+2026-04-12,Links Must Be Distinguishable,0,0.00%
+2026-04-12,Links Require Discernible Text,0,0.00%
+2026-04-12,Links With Same Accessible Name,0,0.00%
+2026-04-12,Select Element Requires Accessible Name,0,0.00%
+2026-04-12,Summary Elements Require Discernible Text,0,0.00%
+2026-04-12,Deprecated <marquee> Element Must Not Be Used,0,0.00%
+2026-04-12,<blink> Elements Deprecated & Must Not Be Used,0,0.00%
+2026-04-12,Text Requires Higher Color Contrast Ratio,0,0.00%
+2026-04-12,Text Requires Higher Color Contrast to Background,0,0.00%
+2026-04-12,Touch Targets Require Sufficient Size & Spacing,0,0.00%
+2026-04-12,Interactive Controls Must Not Be Nested,0,0.00%
+2026-04-12,List Items Must Be Contained In List Elements,0,0.00%
+2026-04-12,Lists Must Only Contain <li> Content Elements,0,0.00%
+2026-04-12,<dl> Must Only Have Ordered <dt> & <dd> Groups,0,0.00%
+2026-04-12,<dt> & <dd> Elements Must Be Contained by <dl>,0,0.00%
+2026-04-12,<th> Element Requires Associated Data Cells,0,0.00%
+2026-04-12,Table Header Attr Must Refer To Cell In Same Table,0,0.00%
+2026-04-12,Table Headers Require Discernible Text,0,0.00%
+2026-04-12,Table With Identical Summary & Caption Text,0,0.00%
+2026-04-12,Scope Attribute Should Be Used Correctly On Tables,0,0.00%
+2026-04-12,All,44,100.00%
+2026-04-12,All,44,100.00%
+2026-04-12,All,86,100.00%
+2026-04-12,All,88,100.00%
+2026-04-12,Sessions Above 0,0,0.00%
+2026-04-12,Bounce Rate Above 70%,0,0.00%
+2026-04-12,No GA Data,0,0.00%
+2026-04-12,Non-Indexable with GA Data,0,0.00%
+2026-04-12,Orphan URLs,0,0.00%
+2026-04-12,All,88,100.00%
+2026-04-12,Clicks Above 0,0,0.00%
+2026-04-12,No Search Analytics Data,0,0.00%
+2026-04-12,Non-Indexable with Search Analytics Data,0,0.00%
+2026-04-12,Orphan URLs,0,0.00%
+2026-04-12,URL is Not on Google,0,0.00%
+2026-04-12,Indexable URL Not Indexed,0,0.00%
+2026-04-12,URL is on Google But Has Issues,0,0.00%
+2026-04-12,User-Declared Canonical Not Selected,0,0.00%
+2026-04-12,Page is Not Mobile Friendly,0,0.00%
+2026-04-12,AMP URL Invalid,0,0.00%
+2026-04-12,Rich Result Invalid,0,0.00%
+2026-04-12,All,130,100.00%
+2026-04-12,Invalid HTML Elements in <head>,0,0.00%
+2026-04-12,<body> Element Preceding <html>,0,0.00%
+2026-04-12,<head> Not First In <html> Element,0,0.00%
+2026-04-12,Missing <head> Tag,0,0.00%
+2026-04-12,Multiple <head> Tags,0,0.00%
+2026-04-12,Missing <body> Tag,0,0.00%
+2026-04-12,Multiple <body> Tags,0,0.00%
+2026-04-12,HTML Document Over 2MB,0,0.00%
+2026-04-12,Resource Over 2MB,0,0.00%
+2026-04-12,High Carbon Rating,0,0.00%
+2026-04-12,All,88,100.00%
+2026-04-12,All,86,100.00%
+2026-04-12,0,0,0.00%
+2026-04-12,1,1,2.27%
+2026-04-12,2,0,0.00%
+2026-04-12,3,5,11.36%
+2026-04-12,4,0,0.00%
+2026-04-12,5,37,84.09%
+2026-04-12,6,0,0.00%
+2026-04-12,7,1,2.27%
+2026-04-12,8,0,0.00%
+2026-04-12,9,0,0.00%
+2026-04-12,10+,0,0.00%
+2026-04-12,https://spilou.com/,44,100.00%
+2026-04-12,https://spilou.com/blog/,38,86.36%
+2026-04-12,https://spilou.com/blog/posts/compte-google-my-business/,24,54.55%
+2026-04-12,https://spilou.com/blog/posts/repondre-avis-google/,17,38.64%
+2026-04-12,https://spilou.com/blog/posts/fiche-google-my-business/,17,38.64%
+2026-04-12,https://spilou.com/blog/posts/ameliorer-referencement-google-my-business/,17,38.64%
+2026-04-12,https://spilou.com/blog/posts/optimisation-fiche-google-my-business/,16,36.36%
+2026-04-12,https://spilou.com/blog/posts/avis-google/,15,34.09%
+2026-04-12,https://spilou.com/blog/posts/augmenter-visibilite-web/,14,31.82%
+2026-04-12,https://spilou.com/blog/posts/ajouter-votre-entreprise-sur-google-my-business/,14,31.82%
+2026-04-12,https://spilou.com/blog/posts/statistique-recherches-google/,14,31.82%
+2026-04-12,https://spilou.com/blog/posts/demander-avis-google/,13,29.55%
+2026-04-12,https://spilou.com/blog/posts/ajouter-des-photos-google-my-business/,13,29.55%
+2026-04-12,https://spilou.com/blog/posts/services-fiche-google-my-business/,13,29.55%
+2026-04-12,https://spilou.com/blog/posts/modifier-horaires-ouverture-google-my-business/,13,29.55%
+2026-04-12,https://spilou.com/blog/posts/supprimer-fiche-etablissement/,12,27.27%
+2026-04-12,https://spilou.com/blog/posts/resoudre-la-suspension-compte-google/,12,27.27%
+2026-04-12,https://spilou.com/blog/posts/enlever-compte-google-sans-le-supprimer/,12,27.27%
+2026-04-12,https://spilou.com/blog/posts/deconnecter-un-compte-google/,12,27.27%
+2026-04-12,https://spilou.com/blog/posts/guide-pour-contacter-google-my-business/,12,27.27%
 2026-04-12,Response Time (Seconds),URLs,% of Total
 2026-04-12,1,130,100.00%
