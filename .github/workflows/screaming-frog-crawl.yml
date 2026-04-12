@@ -42,6 +42,7 @@ jobs:
             --headless \
             --crawl http://spilou.com/ \
             --export-tabs "Internal:All" \
+            --save-report "Crawl Overview" \
             --output-folder results/${CRAWL_DATE}
 
       - name: Add crawl_date column and clean headers for BigQuery
