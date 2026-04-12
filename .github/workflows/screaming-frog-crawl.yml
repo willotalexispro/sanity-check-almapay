@@ -41,13 +41,19 @@ jobs:
             --save-report "Crawl Overview" \
             --output-folder results/${CRAWL_DATE}
 
-      - name: Add crawl_date column to CSV
+      - name: Add crawl_date column and clean headers for BigQuery
         run: |
           CRAWL_DATE=$(date +%Y-%m-%d)
           CSV_FILE="results/${CRAWL_DATE}/crawl_overview.csv"
-          awk -v date="$CRAWL_DATE" \
-            'NR==1{print "crawl_date,"$0} NR>1{print date","$0}' \
-            "$CSV_FILE" > "results/${CRAWL_DATE}/crawl_overview.dated.csv"
+          awk -v date="$CRAWL_DATE" '
+            NR==1 {
+              header = "crawl_date," $0
+              gsub(/"/, "", header)
+              gsub(/ /, "_", header)
+              print header
+            }
+            NR>1 { print date "," $0 }
+          ' "$CSV_FILE" > "results/${CRAWL_DATE}/crawl_overview.dated.csv"
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
