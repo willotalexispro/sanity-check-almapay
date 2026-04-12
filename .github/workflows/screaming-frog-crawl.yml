@@ -39,17 +39,17 @@ jobs:
             --accept-cookie-prompt \
             --license-key ${{ secrets.SF_LICENSE_KEY }} \
             --crawl http://spilou.com/ \
-            --export-tabs "Internal:All" \
+            --save-report "Crawl Overview" \
             --output-folder results \
             --filename crawl-$(date +%Y-%m-%d)
 
       - name: Add crawl_date column to CSV
         run: |
           CRAWL_DATE=$(date +%Y-%m-%d)
-          CSV_FILE="results/crawl-${CRAWL_DATE}.csv"
+          CSV_FILE="results/crawl_overview.csv"
           awk -v date="$CRAWL_DATE" \
             'NR==1{print "crawl_date,"$0} NR>1{print date","$0}' \
-            "$CSV_FILE" > "${CSV_FILE}.dated.csv"
+            "$CSV_FILE" > "results/crawl_overview-${CRAWL_DATE}.dated.csv"
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -68,7 +68,7 @@ jobs:
             --source_format=CSV \
             --skip_leading_rows=1 \
             githubactions-493011.screaming_frog_alma.alma \
-            "results/crawl-${CRAWL_DATE}.csv.dated.csv"
+            "results/crawl_overview-${CRAWL_DATE}.dated.csv"
 
       - name: Commit results to repo
         run: |
