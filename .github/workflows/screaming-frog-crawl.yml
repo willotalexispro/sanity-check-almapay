@@ -43,6 +43,7 @@ jobs:
             --crawl http://spilou.com/ \
             --export-tabs "Internal:All" \
             --save-report "Crawl Overview" \
+            --overwrite \
             --output-folder results/${CRAWL_DATE}
 
       - name: Process Internal:All for BigQuery
