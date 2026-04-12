@@ -45,10 +45,10 @@ jobs:
             --save-report "Crawl Overview" \
             --output-folder results/${CRAWL_DATE}
 
-      - name: Add crawl_date column and clean headers for BigQuery
+      - name: Process Internal:All for BigQuery
         run: |
           CRAWL_DATE=$(date +%Y-%m-%d)
-          cat > /tmp/process_csv.py << 'PYEOF'
+          cat > /tmp/process_internal.py << 'PYEOF'
           import csv, re, sys
           crawl_date, csv_file, out_file = sys.argv[1], sys.argv[2], sys.argv[3]
           with open(csv_file, newline='', encoding='utf-8-sig') as fin, \
@@ -64,10 +64,46 @@ jobs:
               for row in reader:
                   writer.writerow([crawl_date] + row)
           PYEOF
-          python3 /tmp/process_csv.py \
+          python3 /tmp/process_internal.py \
             "$CRAWL_DATE" \
             "results/${CRAWL_DATE}/internal_all.csv" \
             "results/${CRAWL_DATE}/internal_all.dated.csv"
+
+      - name: Process Crawl Overview for BigQuery (long format)
+        run: |
+          CRAWL_DATE=$(date +%Y-%m-%d)
+          cat > /tmp/process_overview.py << 'PYEOF'
+          import csv, sys
+
+          crawl_date, csv_file, out_file = sys.argv[1], sys.argv[2], sys.argv[3]
+          header_cols = {'URL', '% du total', 'Total des URL', 'Total des descriptions d\'URL'}
+          output_rows = []
+
+          with open(csv_file, newline='', encoding='utf-8-sig') as fin:
+              reader = csv.reader(fin)
+              for row in reader:
+                  if not row or not row[0].strip():
+                      continue
+                  metric = row[0].strip()
+                  # Skip table header rows
+                  if len(row) > 1 and row[1].strip() in header_cols:
+                      continue
+                  value = row[1].strip() if len(row) > 1 else ''
+                  pct   = row[2].strip() if len(row) > 2 else ''
+                  # Skip section-only headers (no value)
+                  if not value:
+                      continue
+                  output_rows.append([crawl_date, metric, value, pct])
+
+          with open(out_file, 'w', newline='', encoding='utf-8') as fout:
+              writer = csv.writer(fout)
+              writer.writerow(['crawl_date', 'metric', 'value', 'percentage'])
+              writer.writerows(output_rows)
+          PYEOF
+          python3 /tmp/process_overview.py \
+            "$CRAWL_DATE" \
+            "results/${CRAWL_DATE}/crawl_overview.csv" \
+            "results/${CRAWL_DATE}/crawl_overview.dated.csv"
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -77,7 +113,7 @@ jobs:
       - name: Setup gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Upload to BigQuery
+      - name: Upload Internal:All to BigQuery
         run: |
           CRAWL_DATE=$(date +%Y-%m-%d)
           bq load \
@@ -86,6 +122,16 @@ jobs:
             --skip_leading_rows=1 \
             "githubactions-493011:screaming_frog_alma.alma" \
             "results/${CRAWL_DATE}/internal_all.dated.csv"
+
+      - name: Upload Crawl Overview to BigQuery
+        run: |
+          CRAWL_DATE=$(date +%Y-%m-%d)
+          bq load \
+            --source_format=CSV \
+            --skip_leading_rows=1 \
+            --schema 'crawl_date:STRING,metric:STRING,value:STRING,percentage:STRING' \
+            "githubactions-493011:screaming_frog_alma.crawl_overview" \
+            "results/${CRAWL_DATE}/crawl_overview.dated.csv"
 
       - name: Commit results to repo
         run: |
