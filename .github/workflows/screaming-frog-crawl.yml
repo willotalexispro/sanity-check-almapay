@@ -32,21 +32,21 @@ jobs:
 
       - name: Run crawl
         run: |
-          mkdir -p results
+          CRAWL_DATE=$(date +%Y-%m-%d)
+          mkdir -p results/${CRAWL_DATE}
           screamingfrogseospider \
             --headless \
             --crawl http://spilou.com/ \
             --save-report "Crawl Overview" \
-            --output-folder results \
-            --filename crawl-$(date +%Y-%m-%d)
+            --output-folder results/${CRAWL_DATE}
 
       - name: Add crawl_date column to CSV
         run: |
           CRAWL_DATE=$(date +%Y-%m-%d)
-          CSV_FILE="results/crawl_overview.csv"
+          CSV_FILE="results/${CRAWL_DATE}/crawl_overview.csv"
           awk -v date="$CRAWL_DATE" \
             'NR==1{print "crawl_date,"$0} NR>1{print date","$0}' \
-            "$CSV_FILE" > "results/crawl_overview-${CRAWL_DATE}.dated.csv"
+            "$CSV_FILE" > "results/${CRAWL_DATE}/crawl_overview.dated.csv"
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -65,7 +65,7 @@ jobs:
             --source_format=CSV \
             --skip_leading_rows=1 \
             githubactions-493011.screaming_frog_alma.alma \
-            "results/crawl_overview-${CRAWL_DATE}.dated.csv"
+            "results/${CRAWL_DATE}/crawl_overview.dated.csv"
 
       - name: Commit results to repo
         run: |
