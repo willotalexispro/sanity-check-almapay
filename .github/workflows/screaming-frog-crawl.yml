@@ -1,0 +1,79 @@
+name: Screaming Frog weekly crawl
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'  # tous les lundis à 7h UTC (9h Paris)
+  workflow_dispatch:      # permet aussi de lancer à la main depuis GitHub
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Get latest Screaming Frog version
+        id: sf_version
+        run: |
+          VERSION=$(curl -s https://www.screamingfrog.co.uk/seo-spider/release-notes/ \
+            | grep -oP 'Version \K[0-9]+\.[0-9]+' \
+            | head -1)
+          echo "Dernière version détectée : $VERSION"
+          if [ -z "$VERSION" ]; then
+            echo "Erreur : version SF non détectée, vérifier la page release notes"
+            exit 1
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Install Screaming Frog CLI
+        run: |
+          wget -q https://download.screamingfrog.co.uk/products/seo-spider/screamingfrogseospider_${{ steps.sf_version.outputs.version }}_amd64.deb
+          sudo apt-get install -y ./screamingfrogseospider_${{ steps.sf_version.outputs.version }}_amd64.deb
+
+      - name: Run crawl
+        run: |
+          mkdir -p results
+          screamingfrogseospider \
+            --headless \
+            --accept-cookie-prompt \
+            --license-key ${{ secrets.SF_LICENSE_KEY }} \
+            --crawl http://spilou.com/ \
+            --export-tabs "Internal:All" \
+            --output-folder results \
+            --filename crawl-$(date +%Y-%m-%d)
+
+      - name: Add crawl_date column to CSV
+        run: |
+          CRAWL_DATE=$(date +%Y-%m-%d)
+          CSV_FILE="results/crawl-${CRAWL_DATE}.csv"
+          awk -v date="$CRAWL_DATE" \
+            'NR==1{print "crawl_date,"$0} NR>1{print date","$0}' \
+            "$CSV_FILE" > "${CSV_FILE}.dated.csv"
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Upload to BigQuery
+        run: |
+          CRAWL_DATE=$(date +%Y-%m-%d)
+          bq load \
+            --append_table \
+            --autodetect \
+            --source_format=CSV \
+            --skip_leading_rows=1 \
+            githubactions-493011.screaming_frog_alma.alma \
+            "results/crawl-${CRAWL_DATE}.csv.dated.csv"
+
+      - name: Commit results to repo
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add results/
+          git commit -m "crawl SF $(date +%Y-%m-%d)" || echo "rien de nouveau"
+          git push
