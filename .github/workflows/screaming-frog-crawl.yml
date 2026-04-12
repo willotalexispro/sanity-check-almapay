@@ -24,12 +24,17 @@ jobs:
           wget -q "$DEB_URL" -O "$DEB_FILE"
           sudo apt-get install -y "./$DEB_FILE"
 
+      - name: Activate Screaming Frog licence
+        run: |
+          mkdir -p ~/ScreamingFrogSEOSpider
+          printf '%s\n%s\n' "${{ secrets.SF_LICENSE_USERNAME }}" "${{ secrets.SF_LICENSE_KEY }}" \
+            > ~/ScreamingFrogSEOSpider/licence.txt
+
       - name: Run crawl
         run: |
           mkdir -p results
           screamingfrogseospider \
             --headless \
-            --license-key ${{ secrets.SF_LICENSE_KEY }} \
             --crawl http://spilou.com/ \
             --save-report "Crawl Overview" \
             --output-folder results \
