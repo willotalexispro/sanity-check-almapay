@@ -13,23 +13,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Get latest Screaming Frog version
-        id: sf_version
-        run: |
-          VERSION=$(curl -s https://www.screamingfrog.co.uk/seo-spider/release-notes/ \
-            | grep -oP 'Version \K[0-9]+\.[0-9]+' \
-            | head -1)
-          echo "Dernière version détectée : $VERSION"
-          if [ -z "$VERSION" ]; then
-            echo "Erreur : version SF non détectée, vérifier la page release notes"
-            exit 1
-          fi
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-
       - name: Install Screaming Frog CLI
         run: |
-          wget -q https://download.screamingfrog.co.uk/products/seo-spider/screamingfrogseospider_${{ steps.sf_version.outputs.version }}_amd64.deb
-          sudo apt-get install -y ./screamingfrogseospider_${{ steps.sf_version.outputs.version }}_amd64.deb
+          DEB_URL=$(curl -sI "https://download.screamingfrog.co.uk/products/seo-spider/screamingfrogseospider_latest_all.deb" \
+            | grep -i '^location:' | awk '{print $2}' | tr -d '\r\n')
+          DEB_FILE=$(basename "$DEB_URL")
+          echo "Téléchargement : $DEB_FILE"
+          wget -q "$DEB_URL" -O "$DEB_FILE"
+          sudo apt-get install -y "./$DEB_FILE"
 
       - name: Run crawl
         run: |
