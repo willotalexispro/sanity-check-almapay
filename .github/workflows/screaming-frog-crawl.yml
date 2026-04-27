@@ -35,6 +35,8 @@ jobs:
           mkdir -p ~/.ScreamingFrogSEOSpider
           printf '%s\n%s\n' "${{ secrets.SF_LICENSE_USERNAME }}" "${{ secrets.SF_LICENSE_KEY }}" \
             > ~/.ScreamingFrogSEOSpider/licence.txt
+          echo "${{ secrets.SF_LEASE_JSON }}" | base64 -d > ~/.ScreamingFrogSEOSpider/lease.json
+          echo "8f6307e2-82bb-449b-953c-4487a780aaaf" > ~/.ScreamingFrogSEOSpider/machine-id.txt
           echo "eula.accepted=15" > ~/.ScreamingFrogSEOSpider/spider.config
 
       - name: Restore Google Drive credentials
