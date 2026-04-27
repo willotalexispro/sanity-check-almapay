@@ -18,6 +18,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Set crawl date
+        run: echo "CRAWL_DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+
       - name: Install Screaming Frog CLI
         run: |
           DEB_URL=$(curl -sI "https://download.screamingfrog.co.uk/products/seo-spider/screamingfrogseospider_latest_all.deb" \
@@ -36,19 +39,18 @@ jobs:
 
       - name: Run crawl
         run: |
-          CRAWL_DATE=$(date +%Y-%m-%d)
-          mkdir -p results/${CRAWL_DATE}
+          mkdir -p results/${{ env.CRAWL_DATE }}
           screamingfrogseospider \
             --headless \
             --crawl http://spilou.com/ \
-            --export-tabs "Internal:All" \
-            --save-report "Crawl Overview" \
+            --export-tabs "Internal:All,Custom:Summary" \
             --overwrite \
-            --output-folder results/${CRAWL_DATE}
+            --output-folder results/${{ env.CRAWL_DATE }}
+          echo "Fichiers produits :"
+          ls results/${{ env.CRAWL_DATE }}/
 
-      - name: Process Internal:All for BigQuery
+      - name: Process Internal:All
         run: |
-          CRAWL_DATE=$(date +%Y-%m-%d)
           cat > /tmp/process_internal.py << 'PYEOF'
           import csv, re, sys
           crawl_date, csv_file, out_file = sys.argv[1], sys.argv[2], sys.argv[3]
@@ -66,79 +68,112 @@ jobs:
                   writer.writerow([crawl_date] + row)
           PYEOF
           python3 /tmp/process_internal.py \
-            "$CRAWL_DATE" \
-            "results/${CRAWL_DATE}/internal_all.csv" \
-            "results/${CRAWL_DATE}/internal_all.dated.csv"
+            "${{ env.CRAWL_DATE }}" \
+            "results/${{ env.CRAWL_DATE }}/internal_all.csv" \
+            "results/${{ env.CRAWL_DATE }}/internal_all.dated.csv"
 
-      - name: Process Crawl Overview for BigQuery (long format)
+      - name: Process Custom Summary
         run: |
-          CRAWL_DATE=$(date +%Y-%m-%d)
-          cat > /tmp/process_overview.py << 'PYEOF'
-          import csv, sys
+          cat > /tmp/process_summary.py << 'PYEOF'
+          import csv, re, sys, os, glob
+          crawl_date, input_dir, out_file = sys.argv[1], sys.argv[2], sys.argv[3]
 
-          crawl_date, csv_file, out_file = sys.argv[1], sys.argv[2], sys.argv[3]
-          header_cols = {'URL', '% du total', 'Total des URL', 'Total des descriptions d\'URL'}
-          output_rows = []
+          # SF peut nommer le fichier custom_summary.csv ou Custom_Summary.csv
+          candidates = glob.glob(os.path.join(input_dir, '*[Cc]ustom*[Ss]ummary*.csv')) \
+                     + glob.glob(os.path.join(input_dir, '*[Cc]ustom_[Ss]ummary*.csv'))
+          if not candidates:
+              print("Aucun fichier Custom Summary trouvé dans :", os.listdir(input_dir))
+              sys.exit(1)
 
-          with open(csv_file, newline='', encoding='utf-8-sig') as fin:
+          csv_file = candidates[0]
+          print(f"Traitement : {csv_file}")
+
+          with open(csv_file, newline='', encoding='utf-8-sig') as fin, \
+               open(out_file, 'w', newline='', encoding='utf-8') as fout:
               reader = csv.reader(fin)
-              for row in reader:
-                  if not row or not row[0].strip():
-                      continue
-                  metric = row[0].strip()
-                  # Skip table header rows
-                  if len(row) > 1 and row[1].strip() in header_cols:
-                      continue
-                  value = row[1].strip() if len(row) > 1 else ''
-                  pct   = row[2].strip() if len(row) > 2 else ''
-                  # Skip section-only headers (no value)
-                  if not value:
-                      continue
-                  output_rows.append([crawl_date, metric, value, pct])
-
-          with open(out_file, 'w', newline='', encoding='utf-8') as fout:
               writer = csv.writer(fout)
-              writer.writerow(['crawl_date', 'metric', 'value', 'percentage'])
-              writer.writerows(output_rows)
+              headers = next(reader)
+              clean_headers = ['crawl_date'] + [
+                  re.sub(r'_+', '_', re.sub(r'[^a-zA-Z0-9]', '_', h)).strip('_')
+                  for h in headers
+              ]
+              writer.writerow(clean_headers)
+              for row in reader:
+                  writer.writerow([crawl_date] + row)
           PYEOF
-          python3 /tmp/process_overview.py \
-            "$CRAWL_DATE" \
-            "results/${CRAWL_DATE}/crawl_overview.csv" \
-            "results/${CRAWL_DATE}/crawl_overview.dated.csv"
+          python3 /tmp/process_summary.py \
+            "${{ env.CRAWL_DATE }}" \
+            "results/${{ env.CRAWL_DATE }}" \
+            "results/${{ env.CRAWL_DATE }}/custom_summary.dated.csv"
+
+      - name: Install Python dependencies
+        run: pip install gspread
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Setup gcloud CLI
-        uses: google-github-actions/setup-gcloud@v2
-
-      - name: Upload Internal:All to BigQuery
+      - name: Upload to Google Sheets
+        env:
+          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
         run: |
-          CRAWL_DATE=$(date +%Y-%m-%d)
-          bq load \
-            --replace \
-            --autodetect \
-            --source_format=CSV \
-            --skip_leading_rows=1 \
-            "githubactions-493011:screaming_frog_alma.alma" \
-            "results/${CRAWL_DATE}/internal_all.dated.csv"
+          cat > /tmp/upload_sheets.py << 'PYEOF'
+          import gspread, csv, os
 
-      - name: Upload Crawl Overview to BigQuery
-        run: |
-          CRAWL_DATE=$(date +%Y-%m-%d)
-          bq load \
-            --source_format=CSV \
-            --skip_leading_rows=1 \
-            --schema 'crawl_date:STRING,metric:STRING,value:STRING,percentage:STRING' \
-            "githubactions-493011:screaming_frog_alma.crawl_overview" \
-            "results/${CRAWL_DATE}/crawl_overview.dated.csv"
+          gc = gspread.service_account(filename=os.environ['GOOGLE_APPLICATION_CREDENTIALS'])
+          spreadsheet = gc.open_by_key(os.environ['GOOGLE_SHEET_ID'])
+          crawl_date = os.environ['CRAWL_DATE']
+
+          def read_csv(path):
+              with open(path, newline='', encoding='utf-8') as f:
+                  return list(csv.reader(f))
+
+          def get_or_create_sheet(spreadsheet, name, rows=5000, cols=100):
+              try:
+                  return spreadsheet.worksheet(name)
+              except gspread.WorksheetNotFound:
+                  return spreadsheet.add_worksheet(title=name, rows=rows, cols=cols)
+
+          # --- Internal All : SUPPRIME et REMPLACE ---
+          internal_path = f"results/{crawl_date}/internal_all.dated.csv"
+          if os.path.exists(internal_path):
+              data = read_csv(internal_path)
+              ws = get_or_create_sheet(spreadsheet, 'Internal All')
+              ws.clear()
+              ws.update(data)
+              print(f"[Internal All] {len(data)-1} URLs uploadées (remplacement complet)")
+          else:
+              print("[Internal All] fichier introuvable, skip")
+
+          # --- Crawl Summary : ACCUMULE une ligne par crawl ---
+          summary_path = f"results/{crawl_date}/custom_summary.dated.csv"
+          if os.path.exists(summary_path):
+              new_data = read_csv(summary_path)
+              if len(new_data) < 2:
+                  print("[Crawl Summary] fichier vide, skip")
+              else:
+                  header   = new_data[0]
+                  new_rows = new_data[1:]
+                  ws = get_or_create_sheet(spreadsheet, 'Crawl Summary', rows=1000, cols=50)
+                  existing = ws.get_all_values()
+                  if existing:
+                      # Retire les lignes du même jour (idempotent si relance)
+                      filtered = [r for r in existing[1:] if r and r[0] != crawl_date]
+                      ws.clear()
+                      ws.update([header] + filtered + new_rows)
+                  else:
+                      ws.update([header] + new_rows)
+                  print(f"[Crawl Summary] ligne {crawl_date} ajoutée ({len(new_rows)} row(s))")
+          else:
+              print("[Crawl Summary] fichier introuvable, skip")
+          PYEOF
+          python3 /tmp/upload_sheets.py
 
       - name: Commit results to repo
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add results/
-          git commit -m "crawl SF $(date +%Y-%m-%d)" || echo "rien de nouveau"
+          git commit -m "crawl SF ${{ env.CRAWL_DATE }}" || echo "rien de nouveau"
           git push
