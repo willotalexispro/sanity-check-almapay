@@ -3,10 +3,11 @@ name: Screaming Frog weekly crawl
 on:
   schedule:
     - cron: '0 7 * * 1'  # tous les lundis à 7h UTC (9h Paris)
-  workflow_dispatch:      # permet aussi de lancer à la main depuis GitHub
+  workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  SF_GOOGLE_ACCOUNT: willot.alexis.pro@gmail.com
 
 jobs:
   crawl:
@@ -26,7 +27,6 @@ jobs:
           DEB_URL=$(curl -sI "https://download.screamingfrog.co.uk/products/seo-spider/screamingfrogseospider_latest_all.deb" \
             | grep -i '^location:' | awk '{print $2}' | tr -d '\r\n')
           DEB_FILE=$(basename "$DEB_URL")
-          echo "Téléchargement : $DEB_FILE"
           wget -q "$DEB_URL" -O "$DEB_FILE"
           sudo apt-get install -y "./$DEB_FILE"
 
@@ -37,17 +37,25 @@ jobs:
             > ~/.ScreamingFrogSEOSpider/licence.txt
           echo "eula.accepted=15" > ~/.ScreamingFrogSEOSpider/spider.config
 
-      - name: Debug - SF CLI help (custom-summary)
-        run: screamingfrogseospider --help 2>&1 | grep -i -A3 "custom"
+      - name: Restore Google Drive credentials
+        run: |
+          CRED_DIR="$HOME/.ScreamingFrogSEOSpider/google_drive/saveduser/${{ env.SF_GOOGLE_ACCOUNT }}"
+          mkdir -p "$CRED_DIR"
+          echo "${{ secrets.SF_GOOGLE_DRIVE_STORED_CREDENTIAL }}" | base64 -d > "$CRED_DIR/StoredCredential"
+          echo "${{ secrets.SF_GOOGLE_DRIVE_ACCOUNT_CONFIG }}"   | base64 -d > "$CRED_DIR/AccountConfig"
+          echo "${{ env.SF_GOOGLE_ACCOUNT }}" > "$HOME/.ScreamingFrogSEOSpider/google_drive/preferredAccount"
+          echo "Credentials restaurées pour ${{ env.SF_GOOGLE_ACCOUNT }}"
 
       - name: Run crawl
         run: |
+          COLUMNS=$(cat config/custom_summary_columns.txt)
           mkdir -p results/${{ env.CRAWL_DATE }}
           screamingfrogseospider \
             --headless \
             --crawl http://spilou.com/ \
             --export-tabs "Internal:All" \
-            --export-custom-summary \
+            --export-custom-summary "$COLUMNS" \
+            --google-drive-account "${{ env.SF_GOOGLE_ACCOUNT }}" \
             --overwrite \
             --output-folder results/${{ env.CRAWL_DATE }}
           echo "Fichiers produits :"
@@ -76,40 +84,6 @@ jobs:
             "results/${{ env.CRAWL_DATE }}/internal_all.csv" \
             "results/${{ env.CRAWL_DATE }}/internal_all.dated.csv"
 
-      - name: Process Custom Summary
-        run: |
-          cat > /tmp/process_custom_summary.py << 'PYEOF'
-          import csv, re, sys, os, glob
-
-          crawl_date, input_dir, out_file = sys.argv[1], sys.argv[2], sys.argv[3]
-
-          candidates = glob.glob(os.path.join(input_dir, '*[Cc]ustom*[Ss]ummary*.csv'))
-          if not candidates:
-              print("Fichiers disponibles :", os.listdir(input_dir))
-              print("Aucun fichier Custom Summary trouvé")
-              sys.exit(1)
-
-          csv_file = candidates[0]
-          print(f"Traitement : {csv_file}")
-
-          with open(csv_file, newline='', encoding='utf-8-sig') as fin, \
-               open(out_file, 'w', newline='', encoding='utf-8') as fout:
-              reader = csv.reader(fin)
-              writer = csv.writer(fout)
-              headers = next(reader)
-              clean_headers = ['crawl_date'] + [
-                  re.sub(r'_+', '_', re.sub(r'[^a-zA-Z0-9]', '_', h)).strip('_')
-                  for h in headers
-              ]
-              writer.writerow(clean_headers)
-              for row in reader:
-                  writer.writerow([crawl_date] + row)
-          PYEOF
-          python3 /tmp/process_custom_summary.py \
-            "${{ env.CRAWL_DATE }}" \
-            "results/${{ env.CRAWL_DATE }}" \
-            "results/${{ env.CRAWL_DATE }}/custom_summary.dated.csv"
-
       - name: Install Python dependencies
         run: pip install gspread
 
@@ -118,11 +92,11 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Upload to Google Sheets
+      - name: Upload Internal:All to Google Sheets
         env:
           GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
         run: |
-          cat > /tmp/upload_sheets.py << 'PYEOF'
+          cat > /tmp/upload_internal.py << 'PYEOF'
           import gspread, csv, os
 
           gc = gspread.service_account(filename=os.environ['GOOGLE_APPLICATION_CREDENTIALS'])
@@ -139,7 +113,6 @@ jobs:
               except gspread.WorksheetNotFound:
                   return spreadsheet.add_worksheet(title=name, rows=rows, cols=cols)
 
-          # --- Internal All : SUPPRIME et REMPLACE ---
           internal_path = f"results/{crawl_date}/internal_all.dated.csv"
           if os.path.exists(internal_path):
               data = read_csv(internal_path)
@@ -149,29 +122,8 @@ jobs:
               print(f"[Internal All] {len(data)-1} URLs uploadées (remplacement complet)")
           else:
               print("[Internal All] fichier introuvable, skip")
-
-          # --- Crawl Summary : ACCUMULE une ligne par crawl ---
-          summary_path = f"results/{crawl_date}/custom_summary.dated.csv"
-          if os.path.exists(summary_path):
-              new_data = read_csv(summary_path)
-              if len(new_data) < 2:
-                  print("[Crawl Summary] fichier vide, skip")
-              else:
-                  header   = new_data[0]
-                  new_rows = new_data[1:]
-                  ws = get_or_create_sheet(spreadsheet, 'Crawl Summary', rows=1000, cols=200)
-                  existing = ws.get_all_values()
-                  if existing:
-                      filtered = [r for r in existing[1:] if r and r[0] != crawl_date]
-                      ws.clear()
-                      ws.update([header] + filtered + new_rows)
-                  else:
-                      ws.update([header] + new_rows)
-                  print(f"[Crawl Summary] ligne {crawl_date} ajoutée ({len(new_rows)} row(s))")
-          else:
-              print("[Crawl Summary] fichier introuvable, skip")
           PYEOF
-          python3 /tmp/upload_sheets.py
+          python3 /tmp/upload_internal.py
 
       - name: Commit results to repo
         run: |
