@@ -36,6 +36,10 @@ jobs:
           printf '%s\n%s\n' "${{ secrets.SF_LICENSE_USERNAME }}" "${{ secrets.SF_LICENSE_KEY }}" \
             > ~/.ScreamingFrogSEOSpider/licence.txt
           echo "eula.accepted=15" > ~/.ScreamingFrogSEOSpider/spider.config
+          echo "--- debug licence.txt ---"
+          echo "Ligne 1 (username): $(head -1 ~/.ScreamingFrogSEOSpider/licence.txt | wc -c) caractères"
+          echo "Ligne 2 (key): $(tail -1 ~/.ScreamingFrogSEOSpider/licence.txt | wc -c) caractères"
+          echo "Début username: $(head -1 ~/.ScreamingFrogSEOSpider/licence.txt | cut -c1-5)..."
 
       - name: Restore Google Drive credentials
         run: |
