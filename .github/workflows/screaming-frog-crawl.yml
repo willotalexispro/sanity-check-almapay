@@ -44,7 +44,7 @@ jobs:
             --headless \
             --crawl http://spilou.com/ \
             --export-tabs "Internal:All" \
-            --save-report "Crawl Overview" \
+            --export-custom-summary \
             --overwrite \
             --output-folder results/${{ env.CRAWL_DATE }}
           echo "Fichiers produits :"
@@ -73,49 +73,40 @@ jobs:
             "results/${{ env.CRAWL_DATE }}/internal_all.csv" \
             "results/${{ env.CRAWL_DATE }}/internal_all.dated.csv"
 
-      - name: Process Crawl Overview → wide format (1 ligne par crawl)
+      - name: Process Custom Summary
         run: |
-          cat > /tmp/process_summary_wide.py << 'PYEOF'
-          import csv, re, sys
+          cat > /tmp/process_custom_summary.py << 'PYEOF'
+          import csv, re, sys, os, glob
 
-          crawl_date, csv_file, out_file = sys.argv[1], sys.argv[2], sys.argv[3]
+          crawl_date, input_dir, out_file = sys.argv[1], sys.argv[2], sys.argv[3]
 
-          # Lignes à ignorer : métadonnées en tête, en-têtes de tableau, sections vides
-          SKIP_KEYS = {
-              'Summary', 'Internal', 'External', 'Response Codes', 'Redirects',
-              'Canonicals', 'Pagination', 'Images', 'CSS', 'JavaScript',
-              'Security', 'Hreflang', 'AMP', 'Structured Data', 'Custom',
-              'Site Crawled', 'Start Date', 'Start Time', 'Last Modified Date',
-              'Last Modified Time', 'Elapsed', 'Report Date', 'Report Time',
-          }
-          SKIP_VALUES = {'URLs', '% of Total', 'Total URLs', 'Total URLs Description', ''}
+          # SF produit un fichier dont le nom contient "custom_summary" (casse variable)
+          candidates = glob.glob(os.path.join(input_dir, '*[Cc]ustom*[Ss]ummary*.csv'))
+          if not candidates:
+              print("Fichiers disponibles :", os.listdir(input_dir))
+              print("Aucun fichier Custom Summary trouvé")
+              sys.exit(1)
 
-          metrics = {}
-          with open(csv_file, newline='', encoding='utf-8-sig') as fin:
+          csv_file = candidates[0]
+          print(f"Traitement : {csv_file}")
+
+          with open(csv_file, newline='', encoding='utf-8-sig') as fin, \
+               open(out_file, 'w', newline='', encoding='utf-8') as fout:
               reader = csv.reader(fin)
-              for row in reader:
-                  if not row or not row[0].strip():
-                      continue
-                  key = row[0].strip()
-                  if key in SKIP_KEYS:
-                      continue
-                  value = row[1].strip() if len(row) > 1 else ''
-                  if value in SKIP_VALUES:
-                      continue
-                  clean_key = re.sub(r'_+', '_', re.sub(r'[^a-zA-Z0-9]', '_', key)).strip('_').lower()
-                  metrics[clean_key] = value
-
-          with open(out_file, 'w', newline='', encoding='utf-8') as fout:
               writer = csv.writer(fout)
-              writer.writerow(['crawl_date'] + list(metrics.keys()))
-              writer.writerow([crawl_date] + list(metrics.values()))
-
-          print(f"Crawl Overview : {len(metrics)} métriques extraites")
+              headers = next(reader)
+              clean_headers = ['crawl_date'] + [
+                  re.sub(r'_+', '_', re.sub(r'[^a-zA-Z0-9]', '_', h)).strip('_')
+                  for h in headers
+              ]
+              writer.writerow(clean_headers)
+              for row in reader:
+                  writer.writerow([crawl_date] + row)
           PYEOF
-          python3 /tmp/process_summary_wide.py \
+          python3 /tmp/process_custom_summary.py \
             "${{ env.CRAWL_DATE }}" \
-            "results/${{ env.CRAWL_DATE }}/crawl_overview.csv" \
-            "results/${{ env.CRAWL_DATE }}/crawl_summary_wide.csv"
+            "results/${{ env.CRAWL_DATE }}" \
+            "results/${{ env.CRAWL_DATE }}/custom_summary.dated.csv"
 
       - name: Install Python dependencies
         run: pip install gspread
@@ -158,7 +149,7 @@ jobs:
               print("[Internal All] fichier introuvable, skip")
 
           # --- Crawl Summary : ACCUMULE une ligne par crawl ---
-          summary_path = f"results/{crawl_date}/crawl_summary_wide.csv"
+          summary_path = f"results/{crawl_date}/custom_summary.dated.csv"
           if os.path.exists(summary_path):
               new_data = read_csv(summary_path)
               if len(new_data) < 2:
@@ -175,7 +166,7 @@ jobs:
                       ws.update([header] + filtered + new_rows)
                   else:
                       ws.update([header] + new_rows)
-                  print(f"[Crawl Summary] ligne {crawl_date} ajoutée")
+                  print(f"[Crawl Summary] ligne {crawl_date} ajoutée ({len(new_rows)} row(s))")
           else:
               print("[Crawl Summary] fichier introuvable, skip")
           PYEOF
