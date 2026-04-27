@@ -37,6 +37,9 @@ jobs:
             > ~/.ScreamingFrogSEOSpider/licence.txt
           echo "eula.accepted=15" > ~/.ScreamingFrogSEOSpider/spider.config
 
+      - name: Debug - SF CLI help (custom-summary)
+        run: screamingfrogseospider --help 2>&1 | grep -i -A3 "custom"
+
       - name: Run crawl
         run: |
           mkdir -p results/${{ env.CRAWL_DATE }}
@@ -80,7 +83,6 @@ jobs:
 
           crawl_date, input_dir, out_file = sys.argv[1], sys.argv[2], sys.argv[3]
 
-          # SF produit un fichier dont le nom contient "custom_summary" (casse variable)
           candidates = glob.glob(os.path.join(input_dir, '*[Cc]ustom*[Ss]ummary*.csv'))
           if not candidates:
               print("Fichiers disponibles :", os.listdir(input_dir))
@@ -160,7 +162,6 @@ jobs:
                   ws = get_or_create_sheet(spreadsheet, 'Crawl Summary', rows=1000, cols=200)
                   existing = ws.get_all_values()
                   if existing:
-                      # Retire les lignes du même jour (idempotent si relance)
                       filtered = [r for r in existing[1:] if r and r[0] != crawl_date]
                       ws.clear()
                       ws.update([header] + filtered + new_rows)
