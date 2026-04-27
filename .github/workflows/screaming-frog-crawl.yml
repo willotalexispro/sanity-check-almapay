@@ -55,6 +55,7 @@ jobs:
           screamingfrogseospider \
             --headless \
             --crawl https://almapay.com/ \
+            --config config/almapay.seospider \
             --export-tabs "Internal:All" \
             --export-custom-summary "$COLUMNS" \
             --google-drive-account "${{ env.SF_GOOGLE_ACCOUNT }}" \
