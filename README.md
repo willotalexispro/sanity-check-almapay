@@ -39,7 +39,7 @@ Commit results/ dans le repo Git
 | Secret | Description |
 |--------|-------------|
 | `SF_LICENSE_USERNAME` | Username du compte Screaming Frog (pas l'email — voir commande SF Order) |
-| `SF_LICENSE_KEY` | Cle de licence Screaming Frog |
+| `SF_LICENSE_KEY` | Cle de licence Screaming Frog — format `XXXX-XXXX-XXXX-XXXX`, disponible sur la page **Order** du compte SF. **Ne pas dériver de `licence.txt`** qui ne contient que le username. |
 | `SF_LEASE_JSON` | Fichier `lease.json` encode en base64 (voir section Licence ci-dessous) |
 | `SF_GOOGLE_DRIVE_STORED_CREDENTIAL` | Fichier `StoredCredential` encode en base64 (OAuth SF → Google Drive) |
 | `SF_GOOGLE_DRIVE_ACCOUNT_CONFIG` | Fichier `AccountConfig` encode en base64 (OAuth SF → Google Drive) |
