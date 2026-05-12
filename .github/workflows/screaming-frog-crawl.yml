@@ -159,6 +159,38 @@ jobs:
           PYEOF
           python3 /tmp/upload_internal.py
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate PPTX Crawl Overview
+        run: |
+          OVERVIEW="results/${{ env.CRAWL_DATE }}/crawl_overview.csv"
+          if [ ! -f "$OVERVIEW" ]; then
+            echo "crawl_overview.csv introuvable, skip PPTX"
+            exit 0
+          fi
+          npm ci --prefix pipeline --silent
+          PREV_DATE=$(ls results/ | grep "^20" | grep -v "${{ env.CRAWL_DATE }}" | sort | tail -1)
+          PPTX_OUT="results/${{ env.CRAWL_DATE }}/deck_${{ env.CRAWL_DATE }}.pptx"
+          if [ -n "$PREV_DATE" ] && [ -f "results/$PREV_DATE/crawl_overview.csv" ]; then
+            echo "Génération avec comparaison vs $PREV_DATE"
+            node pipeline/generate.js \
+              --current "$OVERVIEW" \
+              --previous "results/$PREV_DATE/crawl_overview.csv" \
+              --config pipeline/configs/almapay.json \
+              --output "$PPTX_OUT"
+          else
+            echo "Génération baseline (sans comparaison W-o-W)"
+            node pipeline/generate.js \
+              --current "$OVERVIEW" \
+              --config pipeline/configs/almapay.json \
+              --output "$PPTX_OUT"
+          fi
+          echo "PPTX_PATH=$PPTX_OUT" >> $GITHUB_ENV
+          echo "Deck généré : $PPTX_OUT"
+
       - name: Commit results to repo
         run: |
           git config user.name "github-actions"
@@ -172,6 +204,8 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SITE_URL: https://almapay.com/
+          GITHUB_REPO: ${{ github.repository }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
         run: |
           pip install anthropic requests -q
           cat > /tmp/slack_audit.py << 'PYEOF'
@@ -180,6 +214,9 @@ jobs:
 
           crawl_date = os.environ['CRAWL_DATE']
           site_url   = os.environ['SITE_URL']
+          github_repo = os.environ.get('GITHUB_REPO', '')
+          github_branch = os.environ.get('GITHUB_REF_NAME', 'main')
+          pptx_path = os.environ.get('PPTX_PATH', '')
 
           def extract_metrics(csv_path):
               metrics = {
@@ -279,6 +316,13 @@ jobs:
           audit = _re.sub(r'\*\*(.+?)\*\*', r'\1', audit)
           audit = _re.sub(r'\*(.+?)\*', r'\1', audit)
 
+          # Lien vers le deck PPTX (GitHub raw)
+          deck_line = ''
+          if pptx_path and github_repo:
+              pptx_filename = os.path.basename(pptx_path)
+              deck_url = f"https://github.com/{github_repo}/raw/{github_branch}/{pptx_path}"
+              deck_line = f"📎 *Deck PPTX :* <{deck_url}|{pptx_filename}>"
+
           # Construction message Slack
           comp = f" vs {prev_date}" if prev_date else ""
           lines = [
@@ -296,6 +340,9 @@ jobs:
               f"*🤖 Analyse Claude :*",
               audit,
           ]
+          if deck_line:
+              lines.append(f"{'─'*40}")
+              lines.append(deck_line)
           text = '\n'.join(lines)
 
           resp = requests.post(
