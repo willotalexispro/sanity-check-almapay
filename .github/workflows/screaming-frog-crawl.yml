@@ -37,7 +37,17 @@ jobs:
             > ~/.ScreamingFrogSEOSpider/licence.txt
           echo "${{ secrets.SF_LEASE_JSON }}" | base64 -d > ~/.ScreamingFrogSEOSpider/lease.json
           echo "8f6307e2-82bb-449b-953c-4487a780aaaf" > ~/.ScreamingFrogSEOSpider/machine-id.txt
-          echo "eula.accepted=15" > ~/.ScreamingFrogSEOSpider/spider.config
+          printf 'eula.accepted=15\nPSI.secretkey=%s\nPSI.auto_connect=true\ngsc.auto_connect_account=Nouveau compte 4\n' \
+            "${{ secrets.SF_PSI_API_KEY }}" \
+            > ~/.ScreamingFrogSEOSpider/spider.config
+
+      - name: Restore Google Search Console credentials
+        run: |
+          CRED_DIR="$HOME/.ScreamingFrogSEOSpider/search_console/saveduser/Nouveau compte 4"
+          mkdir -p "$CRED_DIR"
+          echo "${{ secrets.SF_GSC_STORED_CREDENTIAL }}" | base64 -d > "$CRED_DIR/StoredCredential"
+          echo "${{ secrets.SF_GSC_ACCOUNT_CONFIG }}"    | base64 -d > "$CRED_DIR/AccountConfig"
+          echo "Credentials GSC restaurées (almapay.com)"
 
       - name: Restore Google Drive credentials
         run: |
@@ -58,6 +68,7 @@ jobs:
             --config config/almapay.seospiderconfig \
             --export-tabs "Internal:All" \
             --export-custom-summary "$COLUMNS" \
+            --save-report "Crawl Overview,Issues Overview" \
             --google-drive-account "${{ env.SF_GOOGLE_ACCOUNT }}" \
             --overwrite \
             --output-folder results/${{ env.CRAWL_DATE }}
@@ -125,6 +136,26 @@ jobs:
               print(f"[Internal All] {len(data)-1} URLs uploadées (remplacement complet)")
           else:
               print("[Internal All] fichier introuvable, skip")
+
+          overview_path = f"results/{crawl_date}/crawl_overview.csv"
+          if os.path.exists(overview_path):
+              data = read_csv(overview_path)
+              ws = get_or_create_sheet(spreadsheet, 'Crawl Overview', rows=500, cols=50)
+              ws.clear()
+              ws.update(data)
+              print(f"[Crawl Overview] {len(data)-1} lignes uploadées")
+          else:
+              print("[Crawl Overview] fichier introuvable, skip")
+
+          issues_path = f"results/{crawl_date}/issues_overview.csv"
+          if os.path.exists(issues_path):
+              data = read_csv(issues_path)
+              ws = get_or_create_sheet(spreadsheet, 'Issues Overview', rows=500, cols=10)
+              ws.clear()
+              ws.update(data)
+              print(f"[Issues Overview] {len(data)-1} lignes uploadées")
+          else:
+              print("[Issues Overview] fichier introuvable, skip")
           PYEOF
           python3 /tmp/upload_internal.py
 
