@@ -45,6 +45,12 @@ Commit results/ dans le repo Git
 | `SF_GOOGLE_DRIVE_ACCOUNT_CONFIG` | Fichier `AccountConfig` encode en base64 (OAuth SF → Google Drive) |
 | `GCP_SA_KEY` | JSON du service account GCP (pour gspread → Google Sheets API) |
 | `GOOGLE_SHEET_ID` | ID du Google Sheet cible (dans l'URL : `/spreadsheets/d/<ID>/`) |
+| `PPTX_DRIVE_FOLDER_ID` | ID du dossier Google Drive où déposer le deck PPTX hebdomadaire. **Un dossier par client** — chaque repo a le sien. Ex : `1SlMvQvPGlSJLIsAUotWomsmvvJj2jU3r` pour AlmaPay. Trouver l'ID dans l'URL Drive : `drive.google.com/drive/folders/<ID>`. Le dossier doit être partagé avec le service account GCP (`github-actions-sf@githubactions-493011.iam.gserviceaccount.com`) en tant qu'Éditeur. |
+| `SF_PSI_API_KEY` | Clé API Google PageSpeed Insights (pour les métriques PSI dans le crawl SF) |
+| `SF_GSC_STORED_CREDENTIAL` | Fichier `StoredCredential` GSC encodé en base64 (OAuth SF → Google Search Console) |
+| `SF_GSC_ACCOUNT_CONFIG` | Fichier `AccountConfig` GSC encodé en base64 (OAuth SF → Google Search Console) |
+| `ANTHROPIC_API_KEY` | Clé API Anthropic (pour l'analyse Claude dans la notification Slack) |
+| `SLACK_WEBHOOK_URL` | URL du webhook Slack entrant pour les notifications |
 
 ---
 
@@ -159,19 +165,44 @@ Pour le Custom Summary, SF n'exporte pas nativement vers BigQuery. Il faudrait l
 
 ---
 
+## Architecture du workflow (4 jobs)
+
+```
+crawl (~40 min)
+   ├── sheets (~1 min)  ─┐
+   └── deck   (~2 min)  ─┴── slack (~30 sec)
+```
+
+- **crawl** : installation SF, crawl, traitement CSV, commit dans le repo (garde les 8 dernières semaines)
+- **sheets** : upload des 3 onglets vers Google Sheets (Internal All, Crawl Overview, Issues Overview)
+- **deck** : génération du PPTX avec comparaison W-o-W + upload vers le dossier Google Drive du client
+- **slack** : analyse Claude + notification avec lien vers le deck
+
+Si un job échoue, utiliser **"Re-run failed jobs"** dans GitHub Actions pour ne relancer que la partie concernée.
+
+---
+
 ## Structure du repo
 
 ```
 .
 ├── .github/
 │   └── workflows/
-│       └── screaming-frog-crawl.yml   # workflow principal
+│       └── screaming-frog-crawl.yml   # workflow principal (4 jobs)
 ├── config/
 │   ├── almapay.seospiderconfig        # profil de configuration SF
-│   └── custom_summary_columns.txt     # 513 colonnes du custom summary SF
-├── results/
+│   └── custom_summary_columns.txt     # colonnes du custom summary SF
+├── pipeline/
+│   ├── generate.js                    # générateur de deck PPTX (pptxgenjs)
+│   ├── parseCrawl.js                  # parser du CSV Crawl Overview SF
+│   ├── package.json
+│   └── configs/
+│       └── almapay.json               # config client (nom, site, agence)
+├── results/                           # 8 dernières semaines conservées
 │   └── <date>/
-│       ├── internal_all.csv           # export brut SF
-│       └── internal_all.dated.csv     # avec colonne crawl_date
+│       ├── internal_all.csv
+│       ├── internal_all.dated.csv
+│       ├── crawl_overview.csv
+│       └── issues_overview_report.csv
 └── README.md
 ```
