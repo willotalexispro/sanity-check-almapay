@@ -235,7 +235,7 @@ jobs:
             echo "PPTX introuvable, skip upload"
             exit 0
           fi
-          LINK=$(curl -s -F "file=@$PPTX_PATH" https://0x0.st)
+          LINK=$(curl -s -F "reqtype=fileupload" -F "time=72h" -F "fileToUpload=@$PPTX_PATH" https://litterbox.catbox.moe/resources/internals/api.php)
           echo "PPTX uploadé : $LINK"
           echo "drive_link=$LINK" >> $GITHUB_OUTPUT
 
