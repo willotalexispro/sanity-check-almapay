@@ -119,7 +119,6 @@ jobs:
           git config user.email "actions@github.com"
           git add results/
           git commit -m "crawl SF ${{ env.CRAWL_DATE }}" || echo "rien de nouveau"
-          git pull --rebase
           git push
 
   # ─────────────────────────────────────────────
