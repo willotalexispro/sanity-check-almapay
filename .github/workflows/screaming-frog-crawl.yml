@@ -104,6 +104,15 @@ jobs:
                   writer.writerow([crawl_date] + row)
           PYEOF
 
+      - name: Cleanup old results (keep last 8 weeks)
+        run: |
+          if [ -d results ]; then
+            ls results/ | grep "^20" | sort | head -n -8 | while read dir; do
+              echo "Suppression de results/$dir"
+              rm -rf "results/$dir"
+            done
+          fi
+
       - name: Commit results to repo
         run: |
           git config user.name "github-actions"
