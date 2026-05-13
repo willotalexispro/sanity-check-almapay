@@ -302,7 +302,7 @@ function resolveRow(row, currentParsed, previousParsed) {
 function buildDeck(currentParsed, previousParsed, config, outputPath) {
   const pres = new pptxgen();
   pres.layout = "LAYOUT_WIDE";
-  pres.author = config.agency || "Bulldozer Collective";
+  pres.author = config.agency || "Alexis Willot";
   pres.title = `Crawl overview ${config.client || ""}`;
 
   const SITE = config.site || currentParsed.meta["Site Crawled"] || "n/a";
@@ -456,7 +456,7 @@ function buildDeck(currentParsed, previousParsed, config, outputPath) {
       x: 11.7, y: 1.0, w: 1.0, h: 1.0,
       fill: { color: C.accent, transparency: 40 }, line: { width: 0 }, rotate: 15,
     });
-    s.addText(config.agency || "Bulldozer Collective", {
+    s.addText(config.agency || "Alexis Willot", {
       x: 0.7, y: 0.55, w: 6, h: 0.35,
       fontFace: FONT_H, fontSize: 11, color: C.accent, bold: true, charSpacing: 5, margin: 0,
     });
