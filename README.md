@@ -45,7 +45,6 @@ Commit results/ dans le repo Git
 | `SF_GOOGLE_DRIVE_ACCOUNT_CONFIG` | Fichier `AccountConfig` encode en base64 (OAuth SF → Google Drive) |
 | `GCP_SA_KEY` | JSON du service account GCP (pour gspread → Google Sheets API) |
 | `GOOGLE_SHEET_ID` | ID du Google Sheet cible (dans l'URL : `/spreadsheets/d/<ID>/`) |
-| `PPTX_DRIVE_FOLDER_ID` | ID du dossier Google Drive où déposer le deck PPTX hebdomadaire. **Un dossier par client** — chaque repo a le sien. Ex : `1SlMvQvPGlSJLIsAUotWomsmvvJj2jU3r` pour AlmaPay. Trouver l'ID dans l'URL Drive : `drive.google.com/drive/folders/<ID>`. Le dossier doit être partagé avec le service account GCP (`github-actions-sf@githubactions-493011.iam.gserviceaccount.com`) en tant qu'Éditeur. |
 | `SF_PSI_API_KEY` | Clé API Google PageSpeed Insights (pour les métriques PSI dans le crawl SF) |
 | `SF_GSC_STORED_CREDENTIAL` | Fichier `StoredCredential` GSC encodé en base64 (OAuth SF → Google Search Console) |
 | `SF_GSC_ACCOUNT_CONFIG` | Fichier `AccountConfig` GSC encodé en base64 (OAuth SF → Google Search Console) |
