@@ -10,17 +10,27 @@ env:
   SF_GOOGLE_ACCOUNT: willot.alexis.pro@gmail.com
 
 jobs:
+
+  # ─────────────────────────────────────────────
+  # JOB 1 — Crawl Screaming Frog + commit résultats
+  # ─────────────────────────────────────────────
   crawl:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      crawl_date: ${{ steps.set_date.outputs.crawl_date }}
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Set crawl date
-        run: echo "CRAWL_DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+        id: set_date
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          echo "CRAWL_DATE=$DATE" >> $GITHUB_ENV
+          echo "crawl_date=$DATE" >> $GITHUB_OUTPUT
 
       - name: Install Screaming Frog CLI
         run: |
@@ -47,7 +57,6 @@ jobs:
           mkdir -p "$CRED_DIR"
           echo "${{ secrets.SF_GSC_STORED_CREDENTIAL }}" | base64 -d > "$CRED_DIR/StoredCredential"
           echo "${{ secrets.SF_GSC_ACCOUNT_CONFIG }}"    | base64 -d > "$CRED_DIR/AccountConfig"
-          echo "Credentials GSC restaurées (almapay.com)"
 
       - name: Restore Google Drive credentials
         run: |
@@ -56,7 +65,6 @@ jobs:
           echo "${{ secrets.SF_GOOGLE_DRIVE_STORED_CREDENTIAL }}" | base64 -d > "$CRED_DIR/StoredCredential"
           echo "${{ secrets.SF_GOOGLE_DRIVE_ACCOUNT_CONFIG }}"   | base64 -d > "$CRED_DIR/AccountConfig"
           echo "${{ env.SF_GOOGLE_ACCOUNT }}" > "$HOME/.ScreamingFrogSEOSpider/google_drive/preferredAccount"
-          echo "Credentials restaurées pour ${{ env.SF_GOOGLE_ACCOUNT }}"
 
       - name: Run crawl
         run: |
@@ -77,7 +85,9 @@ jobs:
 
       - name: Process Internal:All
         run: |
-          cat > /tmp/process_internal.py << 'PYEOF'
+          python3 - "${{ env.CRAWL_DATE }}" \
+            "results/${{ env.CRAWL_DATE }}/internal_all.csv" \
+            "results/${{ env.CRAWL_DATE }}/internal_all.dated.csv" << 'PYEOF'
           import csv, re, sys
           crawl_date, csv_file, out_file = sys.argv[1], sys.argv[2], sys.argv[3]
           with open(csv_file, newline='', encoding='utf-8-sig') as fin, \
@@ -93,10 +103,29 @@ jobs:
               for row in reader:
                   writer.writerow([crawl_date] + row)
           PYEOF
-          python3 /tmp/process_internal.py \
-            "${{ env.CRAWL_DATE }}" \
-            "results/${{ env.CRAWL_DATE }}/internal_all.csv" \
-            "results/${{ env.CRAWL_DATE }}/internal_all.dated.csv"
+
+      - name: Commit results to repo
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add results/
+          git commit -m "crawl SF ${{ env.CRAWL_DATE }}" || echo "rien de nouveau"
+          git push
+
+  # ─────────────────────────────────────────────
+  # JOB 2 — Upload Google Sheets (parallèle avec deck)
+  # ─────────────────────────────────────────────
+  sheets:
+    needs: crawl
+    runs-on: ubuntu-latest
+    env:
+      CRAWL_DATE: ${{ needs.crawl.outputs.crawl_date }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Install Python dependencies
         run: pip install gspread
@@ -106,11 +135,11 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Upload Internal:All to Google Sheets
+      - name: Upload to Google Sheets
         env:
           GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
         run: |
-          cat > /tmp/upload_internal.py << 'PYEOF'
+          python3 << 'PYEOF'
           import gspread, csv, os
 
           gc = gspread.service_account(filename=os.environ['GOOGLE_APPLICATION_CREDENTIALS'])
@@ -127,48 +156,48 @@ jobs:
               except gspread.WorksheetNotFound:
                   return spreadsheet.add_worksheet(title=name, rows=rows, cols=cols)
 
-          internal_path = f"results/{crawl_date}/internal_all.dated.csv"
-          if os.path.exists(internal_path):
-              data = read_csv(internal_path)
-              ws = get_or_create_sheet(spreadsheet, 'Internal All')
-              ws.clear()
-              ws.update(data)
-              print(f"[Internal All] {len(data)-1} URLs uploadées (remplacement complet)")
-          else:
-              print("[Internal All] fichier introuvable, skip")
-
-          overview_path = f"results/{crawl_date}/crawl_overview.csv"
-          if os.path.exists(overview_path):
-              data = read_csv(overview_path)
-              ws = get_or_create_sheet(spreadsheet, 'Crawl Overview', rows=500, cols=50)
-              ws.clear()
-              ws.update(data)
-              print(f"[Crawl Overview] {len(data)-1} lignes uploadées")
-          else:
-              print("[Crawl Overview] fichier introuvable, skip")
-
-          issues_path = f"results/{crawl_date}/issues_overview_report.csv"
-          if os.path.exists(issues_path):
-              data = read_csv(issues_path)
-              ws = get_or_create_sheet(spreadsheet, 'Issues Overview', rows=500, cols=10)
-              ws.clear()
-              ws.update(data)
-              print(f"[Issues Overview] {len(data)-1} lignes uploadées")
-          else:
-              print("[Issues Overview] fichier introuvable, skip")
+          for path, tab, r, c in [
+              (f"results/{crawl_date}/internal_all.dated.csv",   'Internal All',   5000, 100),
+              (f"results/{crawl_date}/crawl_overview.csv",        'Crawl Overview',  500,  50),
+              (f"results/{crawl_date}/issues_overview_report.csv",'Issues Overview', 500,  10),
+          ]:
+              if os.path.exists(path):
+                  data = read_csv(path)
+                  ws = get_or_create_sheet(spreadsheet, tab, rows=r, cols=c)
+                  ws.clear()
+                  ws.update(data)
+                  print(f"[{tab}] {len(data)-1} lignes uploadées")
+              else:
+                  print(f"[{tab}] fichier introuvable, skip")
           PYEOF
-          python3 /tmp/upload_internal.py
+
+  # ─────────────────────────────────────────────
+  # JOB 3 — Génération PPTX + upload Drive (parallèle avec sheets)
+  # ─────────────────────────────────────────────
+  deck:
+    needs: crawl
+    runs-on: ubuntu-latest
+    env:
+      CRAWL_DATE: ${{ needs.crawl.outputs.crawl_date }}
+    outputs:
+      drive_link: ${{ steps.drive_upload.outputs.drive_link }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Generate PPTX Crawl Overview
+      - name: Generate PPTX
         run: |
           OVERVIEW="results/${{ env.CRAWL_DATE }}/crawl_overview.csv"
           if [ ! -f "$OVERVIEW" ]; then
-            echo "crawl_overview.csv introuvable, skip PPTX"
+            echo "crawl_overview.csv introuvable, skip"
             exit 0
           fi
           npm ci --prefix pipeline --silent
@@ -189,18 +218,14 @@ jobs:
               --output "$PPTX_OUT"
           fi
           echo "PPTX_PATH=$PPTX_OUT" >> $GITHUB_ENV
-          echo "Deck généré : $PPTX_OUT"
 
-      - name: Commit results to repo
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add results/
-          git commit -m "crawl SF ${{ env.CRAWL_DATE }}" || echo "rien de nouveau"
-          git push
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Upload PPTX to Google Drive
-        if: env.PPTX_PATH != ''
+        id: drive_upload
         env:
           PPTX_DRIVE_FOLDER_ID: ${{ secrets.PPTX_DRIVE_FOLDER_ID }}
         run: |
@@ -236,24 +261,38 @@ jobs:
 
           link = file.get('webViewLink', '')
           print(f"PPTX uploadé sur Drive : {link}")
-          with open(os.environ['GITHUB_ENV'], 'a') as f:
-              f.write(f"PPTX_DRIVE_LINK={link}\n")
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f"drive_link={link}\n")
           PYEOF
+
+  # ─────────────────────────────────────────────
+  # JOB 4 — Audit SEO + notification Slack
+  # ─────────────────────────────────────────────
+  slack:
+    needs: [crawl, sheets, deck]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Audit SEO + notification Slack
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SITE_URL: https://almapay.com/
+          CRAWL_DATE: ${{ needs.crawl.outputs.crawl_date }}
+          PPTX_DRIVE_LINK: ${{ needs.deck.outputs.drive_link }}
         run: |
           pip install anthropic requests -q
-          cat > /tmp/slack_audit.py << 'PYEOF'
-          import csv, os, json, glob, requests, anthropic
-          from datetime import datetime
+          python3 << 'PYEOF'
+          import csv, os, glob, requests, anthropic
 
           crawl_date = os.environ['CRAWL_DATE']
           site_url   = os.environ['SITE_URL']
-          pptx_path = os.environ.get('PPTX_PATH', '')
           drive_link = os.environ.get('PPTX_DRIVE_LINK', '')
 
           def extract_metrics(csv_path):
@@ -288,36 +327,30 @@ jobs:
                   metrics['duplicate_title'] = sum(c - 1 for c in Counter(titles).values() if c > 1)
               return metrics
 
-          # Crawl actuel
-          current_csv = f"results/{crawl_date}/internal_all.dated.csv"
-          current = extract_metrics(current_csv)
+          current = extract_metrics(f"results/{crawl_date}/internal_all.dated.csv")
           if not current:
               print("CSV introuvable, skip")
               exit(0)
 
-          # Crawl précédent (dossier results le plus récent avant aujourd'hui)
           all_dates = sorted([
               os.path.basename(d)
               for d in glob.glob('results/20*')
               if os.path.basename(d) != crawl_date
           ], reverse=True)
-          previous = None
-          prev_date = None
+          previous, prev_date = None, None
           if all_dates:
               prev_date = all_dates[0]
               previous = extract_metrics(f"results/{prev_date}/internal_all.dated.csv")
 
-          # Formatage delta
           def delta(cur, prev, key, lower_is_better=True):
               if prev is None: return ''
               d = cur[key] - prev[key]
               if d == 0: return '→ 0'
-              arrow = ('↑' if d > 0 else '↓')
+              arrow = '↑' if d > 0 else '↓'
               good = (d < 0) if lower_is_better else (d > 0)
               emoji = '✅' if good else '🔴'
               return f"{arrow} {'+' if d > 0 else ''}{d} {emoji}"
 
-          # Résumé textuel pour Claude
           summary = f"""Site: {site_url}
           Crawl actuel ({crawl_date}):
           - Total URLs: {current['total']}
@@ -334,35 +367,21 @@ jobs:
           - Non-indexables: {previous['non_indexable']}, Titres dupliqués: {previous['duplicate_title']}
           """
 
-          # Appel Claude
           client = anthropic.Anthropic(api_key=os.environ['ANTHROPIC_API_KEY'])
           message = client.messages.create(
               model="claude-haiku-4-5-20251001",
               max_tokens=400,
-              messages=[{
-                  "role": "user",
-                  "content": f"""Tu es un expert SEO. Analyse ces métriques de crawl et génère un audit concis en 4-5 points maximum.
+              messages=[{"role": "user", "content": f"""Tu es un expert SEO. Analyse ces métriques de crawl et génère un audit concis en 4-5 points maximum.
           Sois direct, pratique, en français. Mets en avant les points critiques et les évolutions notables vs le crawl précédent si disponible.
           Format : bullet points courts (1 ligne chacun), pas de titre, pas d'introduction, pas de markdown (pas de **, pas de *, pas de #).
 
-          {summary}"""
-              }]
+          {summary}"""}]
           )
           audit = message.content[0].text.strip()
-          # Remove any markdown bold/italic that wouldn't render in Slack plain text
           import re as _re
           audit = _re.sub(r'\*\*(.+?)\*\*', r'\1', audit)
           audit = _re.sub(r'\*(.+?)\*', r'\1', audit)
 
-          # Lien vers le deck PPTX (Google Drive)
-          deck_line = ''
-          if drive_link:
-              pptx_filename = os.path.basename(pptx_path) if pptx_path else f"deck_{crawl_date}.pptx"
-              deck_line = f"📎 *Deck PPTX :* <{drive_link}|{pptx_filename}>"
-          elif pptx_path:
-              deck_line = f"📎 *Deck PPTX :* généré dans results/{crawl_date}/ (Drive upload échoué)"
-
-          # Construction message Slack
           comp = f" vs {prev_date}" if prev_date else ""
           lines = [
               f"*🕷️ Crawl {site_url} — {crawl_date}{comp}*\n",
@@ -379,9 +398,9 @@ jobs:
               f"*🤖 Analyse Claude :*",
               audit,
           ]
-          if deck_line:
+          if drive_link:
               lines.append(f"{'─'*40}")
-              lines.append(deck_line)
+              lines.append(f"📎 *Deck PPTX :* <{drive_link}|Crawl Overview AlmaPay — {crawl_date}.pptx>")
           text = '\n'.join(lines)
 
           resp = requests.post(
@@ -391,4 +410,3 @@ jobs:
           )
           print(f"Slack: {resp.status_code} — {resp.text}")
           PYEOF
-          python3 /tmp/slack_audit.py
