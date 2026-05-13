@@ -228,55 +228,17 @@ jobs:
           fi
           echo "PPTX_PATH=$PPTX_OUT" >> $GITHUB_ENV
 
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
-
-      - name: Upload PPTX to Google Drive
+      - name: Upload PPTX via transfer.sh
         id: drive_upload
-        env:
-          PPTX_DRIVE_FOLDER_ID: ${{ secrets.PPTX_DRIVE_FOLDER_ID }}
         run: |
-          pip install google-api-python-client -q
-          python3 << 'PYEOF'
-          import os
-          from googleapiclient.discovery import build
-          from googleapiclient.http import MediaFileUpload
-          import google.auth
-
-          pptx_path = os.environ.get('PPTX_PATH', '')
-          folder_id = os.environ.get('PPTX_DRIVE_FOLDER_ID', '')
-          crawl_date = os.environ['CRAWL_DATE']
-
-          if not pptx_path or not os.path.exists(pptx_path):
-              print("PPTX introuvable, skip Drive upload")
-              exit(0)
-
-          from google.oauth2 import service_account
-          creds = service_account.Credentials.from_service_account_file(
-              os.environ['GOOGLE_APPLICATION_CREDENTIALS'],
-              scopes=['https://www.googleapis.com/auth/drive']
-          )
-          service = build('drive', 'v3', credentials=creds)
-
-          file_metadata = {'name': f"Crawl Overview AlmaPay — {crawl_date}.pptx"}
-          if folder_id:
-              file_metadata['parents'] = [folder_id]
-
-          media = MediaFileUpload(
-              pptx_path,
-              mimetype='application/vnd.openxmlformats-officedocument.presentationml.presentation'
-          )
-          file = service.files().create(
-              body=file_metadata, media_body=media, fields='id,webViewLink'
-          ).execute()
-
-          link = file.get('webViewLink', '')
-          print(f"PPTX uploadé sur Drive : {link}")
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
-              f.write(f"drive_link={link}\n")
-          PYEOF
+          if [ -z "$PPTX_PATH" ] || [ ! -f "$PPTX_PATH" ]; then
+            echo "PPTX introuvable, skip upload"
+            exit 0
+          fi
+          FILENAME="Crawl_Overview_AlmaPay_${{ env.CRAWL_DATE }}.pptx"
+          LINK=$(curl -s --upload-file "$PPTX_PATH" "https://transfer.sh/$FILENAME")
+          echo "PPTX uploadé : $LINK"
+          echo "drive_link=$LINK" >> $GITHUB_OUTPUT
 
   # ─────────────────────────────────────────────
   # JOB 4 — Audit SEO + notification Slack
