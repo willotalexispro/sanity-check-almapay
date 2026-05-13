@@ -268,9 +268,21 @@ jobs:
               pptx_path,
               mimetype='application/vnd.openxmlformats-officedocument.presentationml.presentation'
           )
-          file = service.files().create(
-              body=file_metadata, media_body=media, fields='id,webViewLink'
-          ).execute()
+          try:
+              file = service.files().create(
+                  body=file_metadata, media_body=media, fields='id,webViewLink'
+              ).execute()
+          except Exception as e:
+              print(f"Upload avec dossier échoué ({e}), tentative sans parent...")
+              file_metadata.pop('parents', None)
+              media = MediaFileUpload(
+                  pptx_path,
+                  mimetype='application/vnd.openxmlformats-officedocument.presentationml.presentation'
+              )
+              file = service.files().create(
+                  body=file_metadata, media_body=media, fields='id,webViewLink'
+              ).execute()
+              print("Upload vers Drive racine réussi — vérifier le partage du dossier")
 
           link = file.get('webViewLink', '')
           print(f"PPTX uploadé sur Drive : {link}")
