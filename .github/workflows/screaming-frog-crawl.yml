@@ -199,13 +199,52 @@ jobs:
           git commit -m "crawl SF ${{ env.CRAWL_DATE }}" || echo "rien de nouveau"
           git push
 
+      - name: Upload PPTX to Google Drive
+        if: env.PPTX_PATH != ''
+        env:
+          PPTX_DRIVE_FOLDER_ID: ${{ secrets.PPTX_DRIVE_FOLDER_ID }}
+        run: |
+          pip install google-api-python-client -q
+          python3 << 'PYEOF'
+          import os
+          from googleapiclient.discovery import build
+          from googleapiclient.http import MediaFileUpload
+          import google.auth
+
+          pptx_path = os.environ.get('PPTX_PATH', '')
+          folder_id = os.environ.get('PPTX_DRIVE_FOLDER_ID', '')
+          crawl_date = os.environ['CRAWL_DATE']
+
+          if not pptx_path or not os.path.exists(pptx_path):
+              print("PPTX introuvable, skip Drive upload")
+              exit(0)
+
+          creds, _ = google.auth.default(scopes=['https://www.googleapis.com/auth/drive.file'])
+          service = build('drive', 'v3', credentials=creds)
+
+          file_metadata = {'name': f"Crawl Overview AlmaPay — {crawl_date}.pptx"}
+          if folder_id:
+              file_metadata['parents'] = [folder_id]
+
+          media = MediaFileUpload(
+              pptx_path,
+              mimetype='application/vnd.openxmlformats-officedocument.presentationml.presentation'
+          )
+          file = service.files().create(
+              body=file_metadata, media_body=media, fields='id,webViewLink'
+          ).execute()
+
+          link = file.get('webViewLink', '')
+          print(f"PPTX uploadé sur Drive : {link}")
+          with open(os.environ['GITHUB_ENV'], 'a') as f:
+              f.write(f"PPTX_DRIVE_LINK={link}\n")
+          PYEOF
+
       - name: Audit SEO + notification Slack
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SITE_URL: https://almapay.com/
-          GITHUB_REPO: ${{ github.repository }}
-          GITHUB_REF_NAME: ${{ github.ref_name }}
         run: |
           pip install anthropic requests -q
           cat > /tmp/slack_audit.py << 'PYEOF'
@@ -214,9 +253,8 @@ jobs:
 
           crawl_date = os.environ['CRAWL_DATE']
           site_url   = os.environ['SITE_URL']
-          github_repo = os.environ.get('GITHUB_REPO', '')
-          github_branch = os.environ.get('GITHUB_REF_NAME', 'main')
           pptx_path = os.environ.get('PPTX_PATH', '')
+          drive_link = os.environ.get('PPTX_DRIVE_LINK', '')
 
           def extract_metrics(csv_path):
               metrics = {
@@ -316,12 +354,13 @@ jobs:
           audit = _re.sub(r'\*\*(.+?)\*\*', r'\1', audit)
           audit = _re.sub(r'\*(.+?)\*', r'\1', audit)
 
-          # Lien vers le deck PPTX (GitHub raw)
+          # Lien vers le deck PPTX (Google Drive)
           deck_line = ''
-          if pptx_path and github_repo:
-              pptx_filename = os.path.basename(pptx_path)
-              deck_url = f"https://github.com/{github_repo}/raw/{github_branch}/{pptx_path}"
-              deck_line = f"📎 *Deck PPTX :* <{deck_url}|{pptx_filename}>"
+          if drive_link:
+              pptx_filename = os.path.basename(pptx_path) if pptx_path else f"deck_{crawl_date}.pptx"
+              deck_line = f"📎 *Deck PPTX :* <{drive_link}|{pptx_filename}>"
+          elif pptx_path:
+              deck_line = f"📎 *Deck PPTX :* généré dans results/{crawl_date}/ (Drive upload échoué)"
 
           # Construction message Slack
           comp = f" vs {prev_date}" if prev_date else ""
