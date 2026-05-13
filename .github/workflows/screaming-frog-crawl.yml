@@ -235,8 +235,7 @@ jobs:
             echo "PPTX introuvable, skip upload"
             exit 0
           fi
-          FILENAME="Crawl_Overview_AlmaPay_${{ env.CRAWL_DATE }}.pptx"
-          LINK=$(curl -s --upload-file "$PPTX_PATH" "https://transfer.sh/$FILENAME")
+          LINK=$(curl -s -F "file=@$PPTX_PATH" https://0x0.st)
           echo "PPTX uploadé : $LINK"
           echo "drive_link=$LINK" >> $GITHUB_OUTPUT
 
