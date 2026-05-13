@@ -219,7 +219,7 @@ jobs:
               print("PPTX introuvable, skip Drive upload")
               exit(0)
 
-          creds, _ = google.auth.default(scopes=['https://www.googleapis.com/auth/drive.file'])
+          creds, _ = google.auth.default(scopes=['https://www.googleapis.com/auth/drive'])
           service = build('drive', 'v3', credentials=creds)
 
           file_metadata = {'name': f"Crawl Overview AlmaPay — {crawl_date}.pptx"}
