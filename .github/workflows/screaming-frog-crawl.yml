@@ -181,7 +181,7 @@ jobs:
           PYEOF
 
   # ─────────────────────────────────────────────
-  # JOB 3 — Génération PPTX + upload Drive (parallèle avec sheets)
+  # JOB 3 — Génération PPTX + upload Google Drive
   # ─────────────────────────────────────────────
   deck:
     needs: crawl
@@ -228,16 +228,53 @@ jobs:
           fi
           echo "PPTX_PATH=$PPTX_OUT" >> $GITHUB_ENV
 
-      - name: Upload PPTX via transfer.sh
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Upload PPTX to Google Drive
         id: drive_upload
         run: |
           if [ -z "$PPTX_PATH" ] || [ ! -f "$PPTX_PATH" ]; then
             echo "PPTX introuvable, skip upload"
             exit 0
           fi
-          LINK=$(curl -s -F "reqtype=fileupload" -F "time=72h" -F "fileToUpload=@$PPTX_PATH" https://litterbox.catbox.moe/resources/internals/api.php)
-          echo "PPTX uploadé : $LINK"
-          echo "drive_link=$LINK" >> $GITHUB_OUTPUT
+          pip install google-api-python-client -q
+          python3 << 'PYEOF'
+          import os
+          from googleapiclient.discovery import build
+          from googleapiclient.http import MediaFileUpload
+          from google.auth import default
+
+          pptx_path = os.environ['PPTX_PATH']
+          crawl_date = os.environ['CRAWL_DATE']
+
+          creds, _ = default(scopes=['https://www.googleapis.com/auth/drive.file'])
+          service = build('drive', 'v3', credentials=creds)
+
+          file_name = f"Crawl Overview AlmaPay - {crawl_date}.pptx"
+          media = MediaFileUpload(
+              pptx_path,
+              mimetype='application/vnd.openxmlformats-officedocument.presentationml.presentation'
+          )
+          file = service.files().create(
+              body={'name': file_name},
+              media_body=media,
+              fields='id'
+          ).execute()
+          file_id = file.get('id')
+
+          service.permissions().create(
+              fileId=file_id,
+              body={'type': 'anyone', 'role': 'reader'}
+          ).execute()
+
+          link = f"https://drive.google.com/file/d/{file_id}/view"
+          print(f"PPTX uploadé : {link}")
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f"drive_link={link}\n")
+          PYEOF
 
   # ─────────────────────────────────────────────
   # JOB 4 — Audit SEO + notification Slack
