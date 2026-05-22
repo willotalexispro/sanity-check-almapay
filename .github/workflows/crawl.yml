@@ -66,7 +66,7 @@ jobs:
             > ~/.ScreamingFrogSEOSpider/machine-id.txt
           echo '${{ secrets.SF_LEASE_JSON }}' \
             > ~/.ScreamingFrogSEOSpider/lease.json
-          printf 'eula.accepted=15\ngsc.auto_connect_account=Nouveau compte 4\n' \
+          printf 'eula.accepted=15\ngsc.auto_connect_account=Nouveau compte\n' \
             > ~/.ScreamingFrogSEOSpider/spider.config
           echo '${{ secrets.SF_GSC_CREDENTIALS }}' | base64 -d | tar -xz -C ~/.ScreamingFrogSEOSpider/
 
