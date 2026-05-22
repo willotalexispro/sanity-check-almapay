@@ -68,6 +68,7 @@ jobs:
             > ~/.ScreamingFrogSEOSpider/lease.json
           printf 'eula.accepted=15\n' \
             > ~/.ScreamingFrogSEOSpider/spider.config
+          echo '${{ secrets.SF_GSC_CREDENTIALS }}' | base64 -d | tar -xz -C ~/.ScreamingFrogSEOSpider/
 
       - name: Run crawl
         run: |
