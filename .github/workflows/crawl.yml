@@ -163,6 +163,53 @@ jobs:
         run: |
           python3 pipeline/send_report.py "results/latest/ai_analysis.json"
 
+      - name: Send Slack notification
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          python3 << 'PYEOF'
+          import json, urllib.request, os
+
+          with open("results/latest/ai_analysis.json") as f:
+              data = json.load(f)
+
+          crawl_date     = data.get("crawl_date", "")
+          summary        = data.get("dashboard_summary", "")
+          dashboard_url  = "https://willotalexispro.github.io/sanity-check-almapay/"
+
+          payload = json.dumps({
+              "blocks": [
+                  {
+                      "type": "header",
+                      "text": {"type": "plain_text", "text": f"SEO Sanity Check — AlmaPay ({crawl_date})"}
+                  },
+                  {
+                      "type": "section",
+                      "text": {"type": "mrkdwn", "text": summary}
+                  },
+                  {
+                      "type": "actions",
+                      "elements": [{
+                          "type": "button",
+                          "text": {"type": "plain_text", "text": "Voir le dashboard"},
+                          "url": dashboard_url
+                      }]
+                  }
+              ]
+          }).encode()
+
+          req = urllib.request.Request(
+              os.environ["SLACK_WEBHOOK_URL"],
+              data=payload,
+              headers={"Content-Type": "application/json", "User-Agent": "sanity-check-seo/1.0"},
+          )
+          try:
+              resp = urllib.request.urlopen(req, timeout=15)
+              print(f"Slack OK : {resp.read().decode()}")
+          except Exception as e:
+              print(f"Erreur Slack (non bloquant) : {e}")
+          PYEOF
+
   # ── Job 3 : génération PPTX + envoi n8n (optionnel) ─────────────────────────
   deck:
     needs: crawl
