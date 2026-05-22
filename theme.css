@@ -9,11 +9,11 @@
   --logo-height:      32px;
 
   /* ── Couleurs principales ── */
-  --color-primary:    #000000;        /* Black - header, texte principal */
-  --color-accent:     #FA5022;        /* Pomegranate - liens, highlights (couleur signature) */
+  --color-primary:    #000000;        /* Black - texte principal */
+  --color-accent:     #FA5022;        /* Pomegranate - liens, highlights, header */
   --color-success:    #38a169;        /* vert - bon */
   --color-warning:    #FFCF00;        /* Supernova - attention */
-  --color-danger:     #e53e3e;        /* rouge - erreur */
+  --color-danger:     #c92a1f;        /* rouge plus profond pour éviter conflit avec orange */
   --color-neutral:    #6b7280;        /* gris - info */
 
   /* ── Fond & cartes ── */
@@ -22,17 +22,17 @@
   --color-border:     #f0e6dc;
 
   /* ── Header ── */
-  --header-bg:        var(--color-primary);
+  --header-bg:        var(--color-accent);
   --header-text:      #ffffff;
 
   /* ── Onglets ── */
-  --tab-active-bg:    var(--color-primary);
+  --tab-active-bg:    var(--color-accent);
   --tab-active-text:  #ffffff;
   --tab-inactive-bg:  #ffffff;
   --tab-inactive-text: var(--color-primary);
 
   /* ── Tableaux ── */
-  --table-header-bg:  var(--color-primary);
+  --table-header-bg:  var(--color-accent);
   --table-header-text:#ffffff;
   --table-row-alt:    #FFF3EA;        /* Seashell Peach officiel */
 
