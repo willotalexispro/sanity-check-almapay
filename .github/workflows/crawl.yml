@@ -166,37 +166,58 @@ jobs:
       - name: Send Slack notification
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          CRAWL_URL:         https://almapay.com/
+          DASHBOARD_URL:     https://willotalexispro.github.io/sanity-check-almapay/
         run: |
           python3 << 'PYEOF'
-          import json, urllib.request, os
+          import json, urllib.request, os, re
 
           with open("results/latest/ai_analysis.json") as f:
               data = json.load(f)
 
-          crawl_date     = data.get("crawl_date", "")
-          summary        = data.get("dashboard_summary", "")
-          dashboard_url  = "https://willotalexispro.github.io/sanity-check-almapay/"
+          crawl_date    = data.get("crawl_date", "")
+          summary       = data.get("summary", "")
+          site          = os.environ.get("CRAWL_URL", "")
+          dashboard_url = os.environ.get("DASHBOARD_URL", "")
 
-          payload = json.dumps({
-              "blocks": [
-                  {
-                      "type": "header",
-                      "text": {"type": "plain_text", "text": f"SEO Sanity Check — AlmaPay ({crawl_date})"}
-                  },
-                  {
-                      "type": "section",
-                      "text": {"type": "mrkdwn", "text": summary}
-                  },
-                  {
-                      "type": "actions",
-                      "elements": [{
-                          "type": "button",
-                          "text": {"type": "plain_text", "text": "Voir le dashboard"},
-                          "url": dashboard_url
-                      }]
-                  }
-              ]
-          }).encode()
+          def md_to_mrkdwn(text):
+              """Convertit markdown basique en mrkdwn Slack."""
+              lines = text.split('\n')
+              out = []
+              for line in lines:
+                  l = line.strip()
+                  if re.match(r'^#{1,3} ', l):
+                      l = '*' + re.sub(r'^#{1,3} ', '', l) + '*'
+                  l = re.sub(r'\*\*(.+?)\*\*', r'*\1*', l)
+                  out.append(l)
+              return '\n'.join(out)
+
+          mrkdwn = md_to_mrkdwn(summary)
+          # Slack limite les blocs section à 3000 caractères
+          chunks = [mrkdwn[i:i+2900] for i in range(0, len(mrkdwn), 2900)]
+
+          blocks = [
+              {
+                  "type": "header",
+                  "text": {"type": "plain_text", "text": f"Rapport SEO {site} — {crawl_date}"}
+              },
+              {"type": "divider"},
+          ]
+          for chunk in chunks:
+              blocks.append({
+                  "type": "section",
+                  "text": {"type": "mrkdwn", "text": chunk}
+              })
+          blocks.append({
+              "type": "actions",
+              "elements": [{
+                  "type": "button",
+                  "text": {"type": "plain_text", "text": "Voir l'analyse complète →"},
+                  "url": dashboard_url
+              }]
+          })
+
+          payload = json.dumps({"blocks": blocks}).encode()
 
           req = urllib.request.Request(
               os.environ["SLACK_WEBHOOK_URL"],
