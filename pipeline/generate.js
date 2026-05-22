@@ -1,5 +1,5 @@
 // generate.js
-// Pipeline complet : CSV Screaming Frog -> deck Crawl Overview
+// Pipeline complet : CSV -> deck Crawl Overview
 //
 // Usage:
 //   node generate.js \
@@ -24,7 +24,7 @@ const { parseCrawlOverview, getMetric } = require("./parseCrawl");
 // =============================================================
 //
 // Chaque "row" pointe vers une métrique CSV :
-//   section: nom du bloc Screaming Frog (ex. "Page Titles") ou null pour les stats globales
+//   section:  (ex. "Page Titles") ou null pour les stats globales
 //   metric:  nom exact de la ligne SF (ex. "Duplicate")
 //   label:   libellé affiché dans le deck
 //   mode:    "lowerBetter" (issue, on veut baisser) | "higherBetter" (positif, on veut monter)
@@ -237,13 +237,14 @@ const CATALOG = {
 // =============================================================
 const C = {
   ink: "0F172A", ink2: "1E293B", text: "334155", muted: "64748B",
-  border: "E2E8F0", surface: "F8FAFC", white: "FFFFFF",
-  accent: "0891B2", accent2: "0E7490",
+  border: "C9D9F8", surface: "EEF3FD", white: "FFFFFF",
+  accent: "3264B4", accent2: "1A48A0",
+  yellow: "FFD908", salmon: "FF8A8E",
   ok: "10B981", warn: "F59E0B", bad: "EF4444",
-  okBg: "ECFDF5", warnBg: "FFFBEB", badBg: "FEF2F2",
+  okBg: "E6EEFD", warnBg: "FDE7C4", badBg: "FFE5E5",
 };
-const FONT_H = "Calibri";
-const FONT_B = "Calibri";
+const FONT_H = "Rockwell";
+const FONT_B = "Gantari";
 
 function formatPct(p) {
   if (p === null || p === undefined) return "n/a";
@@ -962,7 +963,7 @@ Usage:
   node generate.js --current <csv> [--previous <csv>] [--config <json>] --output <pptx> [--state <json>]
 
 Options:
-  --current   chemin vers le CSV Screaming Frog Crawl Overview de la semaine
+  --current   chemin vers le CSV Crawl Overview de la semaine
   --previous  chemin vers le CSV de la semaine précédente (active les deltas)
   --config    fichier JSON avec { client, site, agency, crawlDate }
   --output    chemin du fichier .pptx généré
