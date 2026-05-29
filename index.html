@@ -206,6 +206,7 @@
       <button class="nav-btn" data-tab="structure"><span class="nav-icon"><i class="fa-solid fa-sitemap"></i></span>Site Structure</button>
       <button class="nav-btn" data-tab="technique"><span class="nav-icon"><i class="fa-solid fa-gear"></i></span>Technique</button>
       <button class="nav-btn" data-tab="images"><span class="nav-icon"><i class="fa-solid fa-image"></i></span>Images</button>
+      <button class="nav-btn" data-tab="schema"><span class="nav-icon"><i class="fa-solid fa-code"></i></span>Données structurées</button>
       <div class="nav-section">Rapports</div>
       <button class="nav-btn" data-tab="crawloverview"><span class="nav-icon"><i class="fa-solid fa-table-list"></i></span>Crawl Overview</button>
       <button class="nav-btn" data-tab="issues"><span class="nav-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Rapport d'erreurs</button>
@@ -310,6 +311,7 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
     if (btn.dataset.tab === 'onpage'        && !renderedTabs.has('onpage'))        renderOnPageCharts(window._rows);
     if (btn.dataset.tab === 'technique'     && !renderedTabs.has('technique'))     renderTechCharts(window._rows);
     if (btn.dataset.tab === 'images'        && !renderedTabs.has('images'))        renderImagesCharts(window._rows);
+    if (btn.dataset.tab === 'schema'        && !renderedTabs.has('schema'))        renderSchemaCharts(window._rows);
     if (btn.dataset.tab === 'searchconsole'  && !renderedTabs.has('searchconsole'))  renderSearchConsoleCharts(window._rows);
     if (btn.dataset.tab === 'crawloverview' && !renderedTabs.has('crawloverview')) loadCrawlOverview();
     if (btn.dataset.tab === 'issues'        && !renderedTabs.has('issues'))        loadIssues();
@@ -629,12 +631,46 @@ async function init() {
       </div>
     </div>`;
 
+    // ══ TAB: Données structurées ═════════════════════════════════════════════
+    const tabSchema = `<div class="container">
+      <div class="cards">
+        ${card('Avec données struct.', 'Structured Data:Contains Structured Data', rows, 'blue')}
+        ${card('Sans données struct.', 'Structured Data:Missing',                  rows, 'orange', true)}
+        ${card('Erreurs validation',   'Structured Data:Validation Errors',        rows, 'red',    true)}
+        ${card('Rich Results détect.', 'Structured Data:Rich Result Feature Detected', rows, 'green')}
+      </div>
+      <div class="charts">
+        <div class="chart-box"><h2>Couverture</h2><canvas id="c-sd-coverage"></canvas></div>
+        <div class="chart-box"><h2>Erreurs &amp; Avertissements</h2><canvas id="c-sd-errors"></canvas></div>
+        <div class="chart-box full"><h2>Formats (JSON-LD / Microdata / RDFa)</h2><canvas id="c-sd-formats"></canvas></div>
+      </div>
+      <div class="tables-grid">
+        <div class="table-box full"><h2>Historique données structurées</h2>
+          ${table(rows, [
+            { key:'crawl_date',                                            raw:true, label:'Date' },
+            { key:'Structured Data:Contains Structured Data',                       label:'Avec SD' },
+            { key:'Structured Data:Missing',                                        label:'Sans SD' },
+            { key:'Structured Data:Validation Errors',                              label:'Erreurs valid.' },
+            { key:'Structured Data:Validation Warnings',                            label:'Avert. valid.' },
+            { key:'Structured Data:Rich Result Validation Errors',                  label:'Err. Rich Result' },
+            { key:'Structured Data:Rich Result Validation Warnings',                label:'Avert. Rich Result' },
+            { key:'Structured Data:Parse Errors',                                   label:'Parse errors' },
+            { key:'Structured Data:JSON-LD URLs',                                   label:'JSON-LD' },
+            { key:'Structured Data:Microdata URLs',                                 label:'Microdata' },
+            { key:'Structured Data:RDFa URLs',                                      label:'RDFa' },
+            { key:'Structured Data:Rich Result Feature Detected',                   label:'Rich Results' },
+          ])}
+        </div>
+      </div>
+    </div>`;
+
     main.innerHTML = `
       <div id="tab-overview"  class="tab-panel active">${tabOverview}</div>
       <div id="tab-onpage"    class="tab-panel">${tabOnPage}</div>
       <div id="tab-structure" class="tab-panel">${tabStructure}</div>
       <div id="tab-technique" class="tab-panel">${tabTechnique}</div>
       <div id="tab-images"       class="tab-panel">${tabImages}</div>
+      <div id="tab-schema"    class="tab-panel">${tabSchema}</div>
       <div id="tab-aiexpert" class="tab-panel">
         <div class="container">
           <div class="ai-block expert">
@@ -758,6 +794,26 @@ function renderImagesCharts(rows) {
     { label:'>100kB',            data: rows.map(r => n(r['Images:Over X KB'])) },
     { label:'Mal dimensionnées', data: rows.map(r => n(r['Images:Incorrectly Sized Images'])) },
     { label:'Attr. manquant',    data: rows.map(r => n(r['Images:Missing Alt Attribute'])) },
+  ]);
+}
+
+function renderSchemaCharts(rows) {
+  const dates = rows.map(r => r.crawl_date);
+  chart('c-sd-coverage', dates, [
+    { label:'Avec SD', data: rows.map(r => n(r['Structured Data:Contains Structured Data'])) },
+    { label:'Sans SD', data: rows.map(r => n(r['Structured Data:Missing'])) },
+  ]);
+  chart('c-sd-errors', dates, [
+    { label:'Erreurs valid.',      data: rows.map(r => n(r['Structured Data:Validation Errors'])) },
+    { label:'Avert. valid.',       data: rows.map(r => n(r['Structured Data:Validation Warnings'])) },
+    { label:'Erreurs Rich Result', data: rows.map(r => n(r['Structured Data:Rich Result Validation Errors'])) },
+    { label:'Avert. Rich Result',  data: rows.map(r => n(r['Structured Data:Rich Result Validation Warnings'])) },
+    { label:'Parse errors',        data: rows.map(r => n(r['Structured Data:Parse Errors'])) },
+  ]);
+  chart('c-sd-formats', dates, [
+    { label:'JSON-LD',   data: rows.map(r => n(r['Structured Data:JSON-LD URLs'])) },
+    { label:'Microdata', data: rows.map(r => n(r['Structured Data:Microdata URLs'])) },
+    { label:'RDFa',      data: rows.map(r => n(r['Structured Data:RDFa URLs'])) },
   ]);
 }
 
